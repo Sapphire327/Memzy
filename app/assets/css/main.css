@@ -1,0 +1,17 @@
+:root {
+	--main-bg-1:#FAA89A;
+	--main-bg-2:#FFC485;
+	--dark-text:#3F3A41;
+	--dark-text:#205466;
+	--main-second:#D18183;
+	--main-second-darker:#a95759;
+}
+.container{
+	max-width: 1500px;
+	padding: 0 10px;
+	margin: auto;
+}
+body{
+	font-family:'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+	color: var(--dark-text);
+}
