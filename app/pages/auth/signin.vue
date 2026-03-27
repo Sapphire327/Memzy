@@ -4,11 +4,11 @@
       <ul class='error'>
         <li v-for="error in errors">{{ error }}</li>
       </ul>
-      <FormInput v-model='formState.email' name="email"  type='mail' class='input' placeholder='почта' autocomplete="username"></FormInput>
+      <FormInput v-model='formState.email' name="email"  type='email' class='input' placeholder='почта' autocomplete="username"></FormInput>
       <FormInput v-model='formState.password' name="password"  type='password' class='input' placeholder='пароль' autocomplete="current-password"></FormInput>
       <FormButton :disabled='loading' class='form__button'>Вход</FormButton>
       <NuxtLink class='form__link' to='/auth/signup'>Зарегистрироваться</NuxtLink>
-      <NuxtLink class='form__link' to='/auth/signup'>Забыли пароль</NuxtLink>
+      <NuxtLink class='form__link' to='/auth/forgot-password'>Забыли пароль</NuxtLink>
     </form>
   </div>
 </template>
@@ -16,6 +16,11 @@
 <script lang="ts" setup>
 import type { FetchError } from 'ofetch'
 import { z } from 'zod/v4'
+const { loggedIn} = useUserSession()
+if(loggedIn.value){
+   navigateTo('/')
+}
+
 const loading = ref(false)
 const loginSchema = z.object({
     password:z.string(),

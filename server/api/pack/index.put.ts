@@ -33,8 +33,6 @@ export default defineEventHandler(async (event) => {
       })
     }
     if(data.deletedTags.length>0){
-      console.log(data.deletedTags);
-      
       await db.delete(tables.packsTags).where(
         and(
           eq(tables.packsTags.packId,pack.id),
@@ -53,7 +51,7 @@ export default defineEventHandler(async (event) => {
       name:data.name,
       description:data.description,
       isPublic:data.isPublic,
-    })
+    }).where(eq(tables.packs.id, pack.id))
 }catch(e){
   ErrorHandler(e)
 }

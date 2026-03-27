@@ -21,7 +21,7 @@
     document.body.style.overflow = isOpen.value ? 'hidden' : '';
   };
   watch(() => isOpen.value, updateScrollLock, { immediate: true });
-  onUnmounted(() => {
+  onBeforeUnmount(() => {
     document.body.style.overflow = '';
   });
   function close(){isOpen.value=false}

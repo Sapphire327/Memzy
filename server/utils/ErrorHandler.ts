@@ -1,6 +1,5 @@
-import { createError } from 'h3'
+import { createError, H3Error } from 'h3'
 import { ZodError } from 'zod'
-
 export default function (error:unknown) {
     if (error instanceof ZodError) {
       throw createError({
@@ -9,7 +8,7 @@ export default function (error:unknown) {
         message:"Некорректные данные",
         data: error.issues.map(x=>x.message)// Expose Zod validation issues to the client
       });
-    } if(error instanceof H3Error){
+    }else if(error instanceof H3Error){
       if (!error.data)
         error.data=[]
       throw error
@@ -22,4 +21,4 @@ export default function (error:unknown) {
         data:[]
       });
     }
-};
+}

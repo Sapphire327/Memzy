@@ -1,10 +1,10 @@
 <template>
   <div class="custom-checkbox">
-    <input v-model="isChecked" type="checkbox" class="custom-checkbox__input"/>
+    <input :id='props.id' v-model="isChecked" type="checkbox" class="custom-checkbox__input" :disabled="props.disabled"/>
     <div @click='toggleCheckbox'  class='custom-checkbox__box'>
       <div class='custom-checkbox__body' :class={active:isChecked}></div>
     </div>
-    <label class="custom-checkbox__label">{{ props.label }}</label>
+    <label :for='props.id' class="custom-checkbox__label">{{ props.label }}</label>
   </div>
 </template>
 
@@ -12,6 +12,7 @@
 const isChecked = defineModel()
 const props = defineProps<{
   label?: string;
+  id:string;
   disabled?: boolean;
 }>();
 function toggleCheckbox(){

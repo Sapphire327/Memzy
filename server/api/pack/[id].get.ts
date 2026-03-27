@@ -1,5 +1,4 @@
 import { db, eq, tables } from '#server/database/utils/database'
-import type { Pack } from '#shared/schemas/pack.schema'
 import ErrorHandler from '~~/server/utils/ErrorHandler'
 export default defineEventHandler(async (event) => {
     try{
@@ -28,7 +27,7 @@ export default defineEventHandler(async (event) => {
       
       if(!pack){
         throw createError({
-          statusCode: 400,
+          statusCode: 404,
           statusMessage: "pack with this id was not found",
           message:"Пак с данным id не был найден",
           data:[]

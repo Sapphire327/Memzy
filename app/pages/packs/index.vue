@@ -6,25 +6,26 @@
       <FormButton class='main__create-btn'>Каталог паков</FormButton>
     </div>
     <div class='main__packs'>
-      <PackLinkInfo :pack='pack'></PackLinkInfo>
-      <PackLinkInfo :pack='pack'></PackLinkInfo>
-      <PackLinkInfo :pack='pack'></PackLinkInfo>
-      <PackLinkInfo :pack='pack'></PackLinkInfo>
+      <PackLinkInfo v-if='data?.packs' v-for="pack in data?.packs" :pack='pack'></PackLinkInfo>
     </div>
   </div>
 </template>
 
 <script lang="ts" setup>
+import type { UsersPack } from '#shared/schemas'
 import authMiddleware from '~/middleware/auth'
 definePageMeta({
  middleware: authMiddleware,
 })
-const pack = {
-  name:'Дни недели по грузински',
-  description:'Список для изучения дней недели на грузинском',
-  tags:['Weeks','Georgian'],
-  lastRepeat:new Date(2026,2,2,19,0,0)
-}
+
+const { data,error } = await useFetch<{packs:UsersPack[]}>(`/api/packs/`,)
+
+// const pack = {
+//   name:'Дни недели по грузински',
+//   description:'Список для изучения дней недели на грузинском',
+//   tags:['Weeks','Georgian'],
+//   lastRepeat:new Date(2026,2,2,19,0,0)
+// }
 function openPopup(){
   isOpen.value=true
   console.log(isOpen.value);

@@ -9,9 +9,11 @@ import type { FetchError } from 'ofetch'
 const message = ref('')
 const route = useRoute();
 const tokenTerm = route.query.token;
-onMounted(async()=>{
-  try{
-   const response = await $fetch('/api/auth/confirmEmail',{
+if (!tokenTerm) {
+  message.value = 'Отсутствует токен подтверждения';
+} else {
+try{
+  const response = await $fetch('/api/auth/confirmEmail',{
     method:'POST',
     body:{token:tokenTerm}
   })
@@ -22,7 +24,7 @@ onMounted(async()=>{
       message.value=fetchError.data.message||'Произошла ошибка'
     }
   }
-})
+}
 </script>
 
 <style scoped>

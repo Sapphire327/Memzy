@@ -3,7 +3,7 @@
     <p class='error'>{{ error }}</p>
     <FormInput  v-model="formState.name" maxlength='100' class='create-form__input' placeholder='Название пака'></FormInput>
     <FormInput  v-model="formState.description" maxlength='100' class='create-form__input' placeholder='Описание'></FormInput>
-    <FormCheckbox :label=isPublicText v-model="formState.isPublic"></FormCheckbox>
+    <FormCheckbox :label=isPublicText v-model="formState.isPublic" id='isPublicCreateForm'></FormCheckbox>
     <FormButton @click='createPack' :disable='loading'>Создать</FormButton>
   </div>
 </template> 

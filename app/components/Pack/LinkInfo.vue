@@ -4,20 +4,17 @@
     <p class='pack__name'>{{ pack.name}}</p>
     <p class='pack__description'>{{ pack.description}}</p>
     <ul class='pack__tag-list'>
-      <li class='pack__tag' v-for="tag in pack.tags">{{ tag }}</li>
+      <li  v-for="tag in pack.tags">
+        <Tag :fontSize='12' class='pack__tag' :tag='tag' :show-delete-button=false></Tag>
+      </li>
     </ul>
-    <p class='pack__last-repeat'>Последнее повторение {{ daysAgoString(pack.lastRepeat) }}</p>
+    <p v-if='pack.lastRepeat' class='pack__last-repeat'>Последнее повторение {{ daysAgoString(pack.lastRepeat) }}</p>
   </div>
 </template>
 
 <script lang="ts" setup>
-interface PackInfo{
-  name:string,
-  description:string,
-  tags:string[],
-  lastRepeat:Date
-}
-const {pack} = defineProps<{pack:PackInfo}>()
+import type { UsersPack } from '#shared/schemas'
+const {pack} = defineProps<{pack:UsersPack}>()
 const isAnimationPlaying = ref(false)
 const timeoutId = ref<null| NodeJS.Timeout>(null);
 function startAnimation(){
@@ -55,9 +52,10 @@ onBeforeUnmount(()=>{
   position: relative;
   background-color: rgba(255, 255, 255, 0.2);
   border-radius: 10px;
-  padding: 8px 16px;
+  padding: 8px 8px;
   border: 3px solid rgb(230, 230, 230);
   max-width: 260px;
+  width: 260px;
   display: flex;
   flex-direction: column;
   gap: 10px;
@@ -69,31 +67,18 @@ onBeforeUnmount(()=>{
       animation: reflect 0.8s 1;
   }
   &__name{
-    font-size: 24px;
+    font-size: 20px;
   }
   &__tag-list{
-    margin-top: 30px;
-    margin-left: 10px;
+    list-style: none;
     display: flex;
-    gap: 15px;
+    flex-wrap: wrap;
+    gap: 5px 5px;
   }
   &__description{
-    font-size: 20px;
+    font-size: 18px;
   }
-  &__tag{
-    font-size: 20px;
-    position: relative;
-    &::after{
-      content: '';
-      position: absolute;
-      background-color: var(--dark-text);
-      width: 4px;
-      height: 4px;
-      border-radius: 50%;
-      left: -8px;
-      top: 50%;
-    }
-  }
+
 }
 
 </style>

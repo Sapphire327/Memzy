@@ -13,7 +13,7 @@
         <FormInput  maxlength='50' v-model='formState.newTag' placeholder='Тег'></FormInput>
         <FormButton @click.prevent='addTagHandle' class='pack-editor__add-tag-btn'>Добавить</FormButton>
       </div>
-      <FormCheckbox :label=isPublicText v-model="formState.isPublic"></FormCheckbox>
+      <FormCheckbox :label=isPublicText v-model="formState.isPublic" id='isPublicEditForm'></FormCheckbox>
       <FormButton>Сохранить</FormButton>
     </form>
   </div>

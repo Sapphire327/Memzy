@@ -5,7 +5,7 @@
         <li v-for="error in errors">{{ error }}</li>
       </ul>
       <FormInput v-model='formState.name' name="name"  class='inputName' placeholder='имя' autocomplete='on'></FormInput>
-      <FormInput v-model='formState.email' name="email"  type='mail' class='inputName' placeholder='почта' autocomplete='on'></FormInput>
+      <FormInput v-model='formState.email' name="email"  type='email' class='inputName' placeholder='почта' autocomplete='on'></FormInput>
       <FormInput v-model='formState.password' name="password"  type='password' class='inputName' placeholder='пароль' autocomplete='off'></FormInput>
       <FormButton :disabled='loading'>Зарегистрироваться</FormButton>
     </form>

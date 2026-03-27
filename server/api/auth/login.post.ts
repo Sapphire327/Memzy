@@ -3,7 +3,7 @@ import ErrorHandler from '~~/server/utils/ErrorHandler'
 import { db, eq, tables } from '../../database/utils/database'
 const registrationSchema = z.object({
   email:z.email(),
-  password:z.string()
+  password:z.string().min(8,'Пароль должен быть не менее 8 символов')
 })
 export default defineEventHandler(async (event) => {
   try{
@@ -30,7 +30,7 @@ export default defineEventHandler(async (event) => {
     }
     if(!user.hasActivated){
        throw createError({
-        statusCode:401,
+        statusCode:403,
         statusMessage:'The email isn\'t confirm',
         message:"Почта не подтверждена",
         data:[]
@@ -43,7 +43,6 @@ export default defineEventHandler(async (event) => {
         email:user.email
       }
     })
-
     return{success:true}
   }catch(e){
     ErrorHandler(e) 

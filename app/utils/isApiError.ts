@@ -16,7 +16,5 @@ export  default function(error: unknown): error is {
     (typeof error.statusCode==='undefined' || typeof error.statusCode === 'number')&&
     (typeof error.statusMessage==='undefined' || typeof error.statusMessage === 'string')&&
     (typeof error.message==='undefined' || typeof error.message === 'string')&&
-    (typeof error.data==='undefined' || (Array.isArray(error.data) && error.data.every(item => typeof item === 'string')))&&
-    (typeof error.data==='undefined' || typeof error.message === 'string')
-  );
-}
+    (typeof error.data==='undefined' || (Array.isArray(error.data) && error.data.every(item => typeof item === 'string')))
+)}

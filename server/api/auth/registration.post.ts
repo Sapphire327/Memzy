@@ -33,7 +33,14 @@ export default defineEventHandler(async (event) => {
       }).returning()
       if(!user)return;
       const domen = process.env.DOMEN || '';
-      const secret = process.env.TOKEN_SECRET || 'fallback_secret';
+      const secret = process.env.TOKEN_SECRET;
+      if (!secret) {
+        throw createError({
+          statusCode: 500,
+          message: 'Сервер не сконфигурирован',
+          data: []
+        });
+      }
        const token = jwt.sign({email:data.email}, secret, {
         expiresIn: '10m',
       });

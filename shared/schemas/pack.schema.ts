@@ -16,6 +16,9 @@ export interface Pack{
   isPublic:boolean
   tags:z.output<typeof TagSchema>[]
 }
+export interface UsersPack extends Pack{
+  lastRepeat?:Date
+}
 export const packEditDtoSchema= z.object({
     id:z.number(),
     name:z.string().min(1,'name must have at least 3 characters long').max(100,'Name cannot be more than 100 characters.'),
