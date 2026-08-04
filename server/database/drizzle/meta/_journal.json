@@ -29,6 +29,13 @@
       "when": 1774193655354,
       "tag": "0003_flippant_sauron",
       "breakpoints": true
+    },
+    {
+      "idx": 4,
+      "version": "7",
+      "when": 1775026800000,
+      "tag": "0004_sparkling_migration",
+      "breakpoints": true
     }
   ]
 }

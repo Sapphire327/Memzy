@@ -1,15 +1,18 @@
 <template>
-  <div class='pack' @mouseenter=startAnimation>
-    <div class='reflect'  :class={reflectAnimation:isAnimationPlaying}></div>
-    <p class='pack__name'>{{ pack.name}}</p>
-    <p class='pack__description'>{{ pack.description}}</p>
-    <ul class='pack__tag-list'>
-      <li  v-for="tag in pack.tags">
-        <Tag :fontSize='12' class='pack__tag' :tag='tag' :show-delete-button=false></Tag>
-      </li>
-    </ul>
-    <p v-if='pack.lastRepeat' class='pack__last-repeat'>Последнее повторение {{ daysAgoString(pack.lastRepeat) }}</p>
-  </div>
+  <NuxtLink :to="'/packs/' + pack.id">
+    <div class='pack' @mouseenter=startAnimation>
+      <div class='reflect'  :class={reflectAnimation:isAnimationPlaying}></div>
+      <p class='pack__name'>{{ pack.name}}</p>
+      <p class='pack__description'>{{ pack.description}}</p>
+      <ul class='pack__tag-list'>
+        <li  v-for="tag in pack.tags">
+          <Tag :fontSize='12' class='pack__tag' :tag='tag' :show-delete-button=false></Tag>
+        </li>
+      </ul>
+      <p v-if='pack.lastRepeat' class='pack__last-repeat'>Последнее повторение {{ daysAgoString(pack.lastRepeat) }}</p>
+    </div>
+  </NuxtLink>
+  
 </template>
 
 <script lang="ts" setup>
@@ -35,7 +38,7 @@ onBeforeUnmount(()=>{
   opacity: 0.7;
   filter: blur(2px);
   left: -100%;
-  bottom: -50%;
+  bottom: -100%;
   position: absolute;
   height: 50px;
   width: 200%;
@@ -68,6 +71,7 @@ onBeforeUnmount(()=>{
   }
   &__name{
     font-size: 20px;
+    color: var(--dark-text);
   }
   &__tag-list{
     list-style: none;
@@ -76,7 +80,9 @@ onBeforeUnmount(()=>{
     gap: 5px 5px;
   }
   &__description{
-    font-size: 18px;
+    font-size: 16px;
+    color: var(--dark-text);
+
   }
 
 }

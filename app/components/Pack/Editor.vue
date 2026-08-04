@@ -42,11 +42,11 @@ import { z } from 'zod/v4'
   return formState.value.isPublic ? 'Публичный' : 'Приватный'
   })
   function deleteTag(tag:Tag){
-    if(tag.id)
+    if(tag.id!==-1)
       formState.value.deletedTags.push(tag.id)
     else{
       formState.value.addedTags=formState.value.addedTags.filter((currentTag)=>{
-       return !(currentTag.id==null&&currentTag.name==tag.name)
+       return !(currentTag.id==-1&&currentTag.name==tag.name)
       })
     }
   }
@@ -54,7 +54,7 @@ import { z } from 'zod/v4'
     if(formState.value.newTag.length<1||currentTags.value?.some(tag=>tag.name===formState.value.newTag))
       return;
     formState.value.addedTags.push({
-      id: null,
+      id: -1,
       name: formState.value.newTag
     })
     formState.value.newTag=''
@@ -71,11 +71,22 @@ import { z } from 'zod/v4'
         method:'PUT',
         body:result.data
       })
+      errors.value=[]
+      const toast = useToast()
+      toast.success({
+        title: 'Сохранено',
+        message: 'Пак успешно сохранён',
+      })
     }
     catch(e){
       const fetchError = e as FetchError;
       if(isApiError(fetchError.data)){
         errors.value=[fetchError.data.message||'',...fetchError.data.data||[]]
+        const toast = useToast()
+        toast.error({
+          title: 'Ошибка',
+          message: fetchError.data.message || 'Не удалось сохранить пак',
+        })
       }
     }finally{
         isLoading.value=false;

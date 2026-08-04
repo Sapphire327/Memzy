@@ -20,25 +20,37 @@ export default defineNuxtConfig({
     '@nuxt/image',
     '@pinia/nuxt',
     'nuxt-auth-utils',
-    'nuxt-nodemailer',
+    'nuxt-toast',
   ],
-  nodemailer: {
-      from: 'MemzyApp',
-      host: '',
-      port: 465,
-      secure: true,
-      auth: {
-        user: '',
-        pass: '',
-      },
+  toast: {
+    settings: {
+      position: 'topRight',
+      timeout: 3500,
+      progressBar: true,
+      pauseOnHover: true,
+      transitionIn: 'fadeInLeft',
+      transitionOut: 'fadeOutRight',
+      titleSize: '16px',
+      messageSize: '14px',
     },
+  },
   runtimeConfig:{
     public: {
       cors: {
         origin: '*', // Для разработки; в продакшене укажите конкретные домены
         methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
         credentials: true
-      }
+      },
+      s3: {
+        publicUrl: process.env.S3_PUBLIC_URL || '',
+      },
+    },
+    s3: {
+      endpoint: process.env.S3_ENDPOINT || '',
+      region: process.env.S3_REGION || 'ru-central1',
+      accessKeyId: process.env.S3_ACCESS_KEY_ID || '',
+      secretAccessKey: process.env.S3_SECRET_ACCESS_KEY || '',
+      bucket: process.env.S3_BUCKET || '',
     },
     session:{
       password:process.env.NUXT_SESSION_PASSWORD || '',
@@ -50,7 +62,18 @@ export default defineNuxtConfig({
         path: '/',
         httpOnly: true
       }
-
     }
-  }
+  },
+    fonts: {
+    provider: 'local',
+    families: [
+      {
+        name: 'Trebuchet MS',
+        src: '/fonts/trebuchetms.ttf',
+        weight: 800,
+        provider: 'local'
+      },
+    ],
+  },
+
 })

@@ -6,7 +6,7 @@
       <FormButton class='main__create-btn'>Каталог паков</FormButton>
     </div>
     <div class='main__packs'>
-      <PackLinkInfo v-if='data?.packs' v-for="pack in data?.packs" :pack='pack'></PackLinkInfo>
+      <PackCard v-if='data?.packs' v-for="pack in data?.packs" :pack='pack'></PackCard>
     </div>
   </div>
 </template>

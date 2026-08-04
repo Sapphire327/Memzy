@@ -4,11 +4,10 @@
       <ul class='error'>
         <li v-for="error in errors">{{ error }}</li>
       </ul>
-      <FormInput v-model='formState.email' name="email"  type='email' class='input' placeholder='почта' autocomplete="username"></FormInput>
-      <FormInput v-model='formState.password' name="password"  type='password' class='input' placeholder='пароль' autocomplete="current-password"></FormInput>
+      <FormInput v-model='formState.login' name="login" class='input' placeholder='логин' autocomplete="username"></FormInput>
+      <FormInput v-model='formState.password' name="password" type='password' class='input' placeholder='пароль' autocomplete="current-password"></FormInput>
       <FormButton :disabled='loading' class='form__button'>Вход</FormButton>
       <NuxtLink class='form__link' to='/auth/signup'>Зарегистрироваться</NuxtLink>
-      <NuxtLink class='form__link' to='/auth/forgot-password'>Забыли пароль</NuxtLink>
     </form>
   </div>
 </template>
@@ -16,33 +15,35 @@
 <script lang="ts" setup>
 import type { FetchError } from 'ofetch'
 import { z } from 'zod/v4'
-const { loggedIn} = useUserSession()
+
+const { loggedIn } = useUserSession()
 if(loggedIn.value){
    navigateTo('/')
 }
 
 const loading = ref(false)
 const loginSchema = z.object({
-    password:z.string(),
-    email:z.email('Некорректный email адрес'),
+    login: z.string().min(1, 'Введите логин'),
+    password: z.string().min(8, 'Пароль должен быть не менее 8 символов'),
 })
 type Schema = z.output<typeof loginSchema>
 const formState = ref<Schema>({
-  email:'',
-  password:''
+  login: '',
+  password: ''
 })
 const errors = ref<string[]>([])
-async function onSignIn(event:SubmitEvent){
+
+async function onSignIn(event: SubmitEvent){
  const result = loginSchema.safeParse(formState.value);
  if(!result.success){
-  errors.value= result.error.issues.map((zError)=>{return zError.message})
+  errors.value = result.error.issues.map((zError) => zError.message)
   return;
  }
  try{
-  loading.value=true;
-  const response = await $fetch('/api/auth/login',{
-    method:'POST',
-    body:result.data
+  loading.value = true;
+  const response = await $fetch('/api/auth/login', {
+    method: 'POST',
+    body: result.data
   })
   const session = useUserSession()
   await session.fetch();
@@ -51,13 +52,12 @@ async function onSignIn(event:SubmitEvent){
  catch(e){
   const fetchError = e as FetchError;
   if(isApiError(fetchError.data)){
-    errors.value=[fetchError.data.message||'',...fetchError.data.data]
+    errors.value = [fetchError.data.message || '', ...fetchError.data.data||[]]
   }
- }finally{
-    loading.value=false;
+ } finally {
+    loading.value = false;
  }
 }
-
 </script>
 
 <style lang='scss' scoped>
@@ -98,10 +98,7 @@ async function onSignIn(event:SubmitEvent){
       transition: all 0.3s ease;
     }
   }
-  /* background-color: white; */
 }
-
-
 .input{
   width: 100%;
   font-size: 20px;

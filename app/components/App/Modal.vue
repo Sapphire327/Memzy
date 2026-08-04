@@ -1,12 +1,14 @@
 <template>
  <Teleport to="body">
-    <div v-if='isOpen' class="modal-overlay" @click.self="props.closeOnOverlayClick ? close() : null">
-      <div v-if='hasModalBody' class='modal-body'>
-        <button @click='close' class='close-btn'><Icon name="akar-icons:cross" size='20' style="color: black" /></button>
-        <slot></slot>
+    <Transition name='modal-overlay'>
+      <div v-if='isOpen' class="modal-overlay" @click.self="props.closeOnOverlayClick ? close() : null">
+        <div v-if='hasModalBody' class='modal-body'>
+          <button @click='close' class='close-btn'><Icon name="akar-icons:cross" size='20' style="color: black" /></button>
+          <slot></slot>
+        </div>
+        <slot v-else></slot>
       </div>
-      <slot v-else></slot>
-    </div>
+    </Transition>
   </Teleport>
 </template>
 
@@ -40,6 +42,22 @@
   justify-content: center;
   z-index: 1000;
   padding: 20px;
+}
+.modal-overlay-enter-active,
+.modal-overlay-leave-active{
+  transition: opacity 0.3s ease;
+}
+.modal-overlay-enter-from,
+.modal-overlay-leave-to{
+  opacity: 0;
+}
+.modal-overlay-enter-active .modal-body,
+.modal-overlay-leave-active .modal-body{
+  transition: transform 0.3s ease;
+}
+.modal-overlay-enter-from .modal-body,
+.modal-overlay-leave-to .modal-body{
+  transform: scale(0.85);
 }
 .modal-body{
   position: relative;

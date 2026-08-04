@@ -5,7 +5,7 @@ export const packCreateDtoSchema = z.object({
   isPublic:z.boolean(),
 })
 export const TagSchema = z.object({
-  id: z.number().nullable(),
+  id: z.number(),
   name: z.string().min(1).max(50)
 });
 export type Tag = z.output<typeof TagSchema>
@@ -27,3 +27,21 @@ export const packEditDtoSchema= z.object({
     addedTags:z.array(TagSchema).default([]),
     deletedTags:z.array(z.number()).default([])
 })
+export const questCreateDtoSchema = z.object({
+    quest:z.string().min(1,'Введите вопрос').max(500,'Вопрос не может быть длиннее 500 символов'),
+    answer:z.string().min(1,'Введите ответ').max(500,'Ответ не может быть длиннее 500 символов'),
+    hint:z.string().max(200,'Подсказка не может быть длиннее 200 символов').optional(),
+    exampleInText:z.string().max(500,'Пример не может быть длиннее 500 символов').optional(),
+    questImgName:z.string().max(255).optional(),
+    answerImgName:z.string().max(255).optional(),
+})
+export interface Quest{
+    id:number,
+    quest:string|null,
+    answer:string|null,
+    hint:string|null,
+    exampleInText:string|null,
+    questImgName:string|null,
+    answerImgName:string|null,
+    packId:number
+}

@@ -1,66 +1,66 @@
 <template>
   <div class='wrap'>
-    <form v-if='!registredSuccess' class='form' @submit.prevent='onSignUp'>
+    <form class='form' @submit.prevent='onSignUp'>
       <ul class='error'>
         <li v-for="error in errors">{{ error }}</li>
       </ul>
-      <FormInput v-model='formState.name' name="name"  class='inputName' placeholder='имя' autocomplete='on'></FormInput>
-      <FormInput v-model='formState.email' name="email"  type='email' class='inputName' placeholder='почта' autocomplete='on'></FormInput>
-      <FormInput v-model='formState.password' name="password"  type='password' class='inputName' placeholder='пароль' autocomplete='off'></FormInput>
+      <FormInput v-model='formState.login' name="login" class='inputName' placeholder='логин' autocomplete='on'></FormInput>
+      <FormInput v-model='formState.name' name="name" class='inputName' placeholder='имя' autocomplete='on'></FormInput>
+      <FormInput v-model='formState.password' name="password" type='password' class='inputName' placeholder='пароль' autocomplete='off'></FormInput>
       <FormButton :disabled='loading'>Зарегистрироваться</FormButton>
     </form>
-    <div v-else>
-      <p class='reg-finished-text'>Для завершения регистрации перейдите по ссылке в письме, которое мы только что отправили на ваш email.</p>
-    </div>
   </div>
 </template>
 
 <script lang="ts" setup >
 import type { FetchError } from 'ofetch'
 import { z } from 'zod/v4'
-const { loggedIn} = useUserSession()
+
+const { loggedIn } = useUserSession()
 if(loggedIn.value){
    navigateTo('/')
 }
 
 const registerSchema = z.object({
-    name:z.string().min(3,'Длина имени: от 3 символов'),
-    password:z.string().min(8,'Длина пароля: от 8 символов'),
-    email:z.email('Некорректный email адрес'),
+    login: z.string().min(3, 'Логин должен быть не менее 3 символов').max(50, 'Логин не может быть длиннее 50 символов'),
+    name: z.string().min(3, 'Имя должно быть не менее 3 символов'),
+    password: z.string().min(8, 'Пароль должен быть не менее 8 символов'),
 })
+
 const loading = ref(false)
-const registredSuccess = ref(false)
 type Schema = z.output<typeof registerSchema>
 const formState = ref<Schema>({
-  name:'',
-  email:'',
-  password:''
+  login: '',
+  name: '',
+  password: ''
 })
 const errors = ref<string[]>([])
-async function onSignUp(event:SubmitEvent){
+
+async function onSignUp(event: SubmitEvent){
  const result = registerSchema.safeParse(formState.value);
  if(!result.success){
-  errors.value = result.error.issues.map((zError)=>{return zError.message})
+  errors.value = result.error.issues.map((zError) => zError.message)
   return;
  }
  try{
-  loading.value=true;
-  const response = await $fetch('/api/auth/registration',{
-    method:'POST',
-    body:result.data
+  loading.value = true;
+  const response = await $fetch('/api/auth/registration', {
+    method: 'POST',
+    body: result.data
   })
-  registredSuccess.value=true
+  const session = useUserSession()
+  await session.fetch()
+  return navigateTo('/')
  }
  catch(e){
   const fetchError = e as FetchError;
   if(isApiError(fetchError.data)){
-    errors.value=[fetchError.data.message||'',...fetchError.data.data]
+    errors.value = [fetchError.data.message || '', ...fetchError.data.data||[]]
   }
- }finally{
-    loading.value=false;
+ } finally {
+    loading.value = false;
  }
 }
-
 </script>
 
 <style scoped>
@@ -78,8 +78,6 @@ async function onSignUp(event:SubmitEvent){
   flex-direction: column;
   gap: 10px;
     color: var(--dark-text);
-
-  /* background-color: white; */
 }
 .inputName{
   width: 100%;
@@ -89,9 +87,5 @@ async function onSignUp(event:SubmitEvent){
   min-height: 25px;
   font-size: 16px;
   color: black;
-}
-.reg-finished-text{
-  font-size: 18px;
-  margin-top: 26px;
 }
 </style>

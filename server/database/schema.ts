@@ -3,8 +3,7 @@ import { bigint, boolean, pgTable, text, timestamp, varchar } from "drizzle-orm/
 export const users = pgTable("users", {
   id: bigint({mode:'number'}).primaryKey().generatedByDefaultAsIdentity(),
   name: text().notNull(),
-  email:varchar({ length: 254 }).notNull().unique(),
-  hasActivated:boolean().default(false).notNull(),
+  login:varchar({ length: 50 }).notNull().unique(),
   passwordHash: text().notNull(),
   createdAt: timestamp('created_at').defaultNow().notNull()
 });

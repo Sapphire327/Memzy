@@ -12,6 +12,22 @@
 	margin: auto;
 }
 body{
-	font-family:'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+	font-family:'Gill Sans', 'Gill Sans MT', 'Trebuchet MS', sans-serif;
 	color: var(--dark-text);
+}
+.iziToast {
+	font-family: 'Gill Sans', 'Gill Sans MT', 'Trebuchet MS', sans-serif !important;
+	background: #fff !important;
+	border-radius: 10px !important;
+	box-shadow: 0 8px 20px rgba(32, 84, 102, 0.18) !important;
+}
+.iziToast-title,
+.iziToast-message {
+	color: var(--dark-text) !important;
+}
+.iziToast-close {
+	color: var(--dark-text) !important;
+}
+.iziToast > .iziToast-progressbar > div {
+	background: var(--main-second) !important;
 }
