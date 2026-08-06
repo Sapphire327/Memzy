@@ -1,27 +1,37 @@
 <template>
   <div class='image-uploader'>
     <p v-if='props.label' class='image-uploader__label'>{{ props.label }}</p>
-    <label v-if='!file' class='image-uploader__picker'>
+    <label v-if='!file && !(initialSrc && !removed)' class='image-uploader__picker'>
       <input type='file' accept='image/*' class='image-uploader__input' @change='onFileChange'>
       <span class='image-uploader__placeholder'>Выбрать картинку</span>
     </label>
-    <div v-if='file' class='image-uploader__preview'>
-      <img :src='previewUrl || undefined' class='image-uploader__img' alt=''>
-      <FormButton type='button' class='image-uploader__remove' @click='clearFile'>Убрать</FormButton>
+    <div v-if='file || (initialSrc && !removed)' class='image-uploader__preview'>
+      <img :src='file ? previewUrl || undefined : initialSrc || undefined' class='image-uploader__img' alt=''>
+      <FormButton type='button' class='image-uploader__remove' @click='removeImage'>Убрать</FormButton>
     </div>
     <p v-if='errorMsg' class='image-uploader__error'>{{ errorMsg }}</p>
   </div>
 </template>
 
 <script lang="ts" setup>
-const props = withDefaults(defineProps<{ label?: string }>(), {
-  label: ''
+const props = withDefaults(defineProps<{ label?: string, initialSrc?: string | null }>(), {
+  label: '',
+  initialSrc: null
 })
 const file = defineModel<File | null>('file', { default: null })
+const removed = defineModel<boolean>('removed', { default: false })
 
 const errorMsg = ref('')
 let objectUrl: string | null = null
 const previewUrl = ref<string | null>(null)
+
+watch(() => props.initialSrc, () => {
+  removed.value = false
+})
+watch(() => file.value, (newFile) => {
+  if (newFile) removed.value = false
+  updatePreview()
+}, { immediate: true })
 
 function updatePreview() {
   if (objectUrl) URL.revokeObjectURL(objectUrl)
@@ -33,7 +43,6 @@ function updatePreview() {
     previewUrl.value = null
   }
 }
-watch(() => file.value, updatePreview, { immediate: true })
 onBeforeUnmount(() => {
   if (objectUrl) URL.revokeObjectURL(objectUrl)
 })
@@ -99,6 +108,14 @@ function compressImage(img: HTMLImageElement, outputType: string, quality: numbe
 function clearFile() {
   file.value = null
   errorMsg.value = ''
+}
+
+function removeImage() {
+  if (file.value) {
+    clearFile()
+  } else {
+    removed.value = true
+  }
 }
 </script>
 

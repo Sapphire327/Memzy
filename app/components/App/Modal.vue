@@ -66,6 +66,8 @@
   padding: 40px 20px 20px 20px;
   background-color: white;
   border-radius: 10px;
+  max-height: 90vh;
+  overflow: auto;
 }
 .close-btn{
     position: absolute;

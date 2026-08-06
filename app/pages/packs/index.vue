@@ -2,8 +2,8 @@
   <div class='main'>
     <AppModal v-model:is-open='isOpen' ><PackCreateForm></PackCreateForm></AppModal>
     <div class='main__top'>
-      <FormButton class='main__create-btn' @click="openPopup">Создать пак</FormButton>
-      <FormButton class='main__create-btn'>Каталог паков</FormButton>
+      <FormButton class='main__create-btn' @click="openPopup">Создать пак</FormButton>
+      <FormButton class='main__create-btn'>Каталог паков</FormButton>
     </div>
     <div class='main__packs'>
       <PackCard v-if='data?.packs' v-for="pack in data?.packs" :pack='pack'></PackCard>
@@ -43,11 +43,16 @@ const isOpen = ref(false)
   margin: auto;
 }
 .main__top{
-  margin-top: 50px;
+  margin-top: 24px;
   display: flex;
   justify-content: flex-start;
   gap: 30px;
-  
+  @media (max-width: 600px) {
+    margin-top: 10px;
+    flex-direction: column;
+    gap: 5px;
+    align-items: center;
+  }
 }
 .main__packs{
   margin-top: 30px;

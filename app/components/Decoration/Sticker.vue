@@ -49,6 +49,7 @@
 <style scoped lang='scss'>
 
   .sticker{
+
     width: 250px;
     border-radius: 8px;
     transform: rotate(15deg);

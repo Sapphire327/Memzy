@@ -1,4 +1,4 @@
-import { S3Client, PutObjectCommand } from '@aws-sdk/client-s3'
+import { S3Client, PutObjectCommand, DeleteObjectCommand } from '@aws-sdk/client-s3'
 import { randomBytes } from 'node:crypto'
 
 function getS3Config() {
@@ -47,4 +47,12 @@ export function getImageUrl(key: string) {
   const publicUrl = useRuntimeConfig().public?.s3?.publicUrl
   if(!publicUrl) return key
   return `${publicUrl.replace(/\/$/, '')}/${key}`
+}
+
+export async function deleteImageFromS3(key: string) {
+  const config = getS3Config()
+  await getS3Client().send(new DeleteObjectCommand({
+    Bucket: config.bucket,
+    Key: key,
+  }))
 }

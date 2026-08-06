@@ -17,15 +17,15 @@
 
     <div class='main__top-buttons'>
       <FormButton class='form__button'>Изучить</FormButton>
-      <FormButton class='form__button' @click='openPopup'>Добавить слово</FormButton>
+      <FormButton class='form__button' @click='openCreatePopup'>Добавить слово</FormButton>
     </div>
 
     <AppModal v-model:is-open='isOpen'>
-      <QuestCreateForm v-if='packId' :pack-id='packId' @created='onQuestCreated'></QuestCreateForm>
+      <QuestCreateForm v-if='packId' :pack-id='packId' :quest='editingQuest' @created='onQuestCreated' @updated='onQuestUpdated'></QuestCreateForm>
     </AppModal>
 
     <div class='main__quests'>
-      <QuestCard v-if='questsData?.quests?.length' v-for="quest in questsData?.quests" :quest='quest'></QuestCard>
+      <QuestCard v-if='questsData?.quests?.length' v-for="quest in questsData?.quests" :quest='quest' editable @edit='openEditPopup'></QuestCard>
       <p v-else class='main__empty'>В этом паке пока нет слов</p>
     </div>
   </div>
@@ -51,12 +51,24 @@ const { data } = await useFetch<{ pack: UsersPack }>(`/api/pack/${packId.value}`
 const { data: questsData, refresh: refreshQuests } = await useFetch<{ quests: Quest[] }>(`/api/pack/${packId.value}/quests`)
 
 const isOpen = ref(false)
+const editingQuest = ref<Quest | null>(null)
 
-function openPopup(){
+function openCreatePopup(){
+  editingQuest.value = null
+  isOpen.value = true
+}
+
+function openEditPopup(quest: Quest){
+  editingQuest.value = quest
   isOpen.value = true
 }
 
 function onQuestCreated(quest: Quest){
+  isOpen.value = false
+  refreshQuests()
+}
+
+function onQuestUpdated(quest: Quest){
   isOpen.value = false
   refreshQuests()
 }
@@ -74,13 +86,11 @@ function onQuestCreated(quest: Quest){
   }
   &__quests{
     margin-top: 30px;
-    justify-content: start;
-    flex-wrap: wrap;
-    display: flex;
+    // justify-content: start;
+    // flex-wrap: wrap;
+    display: grid;
     gap: 15px;
-    &>*{
-      flex: 0 1 32%;
-    }
+    grid-template-columns: repeat(auto-fit, minmax(300px,1fr)); 
   }
   &__empty{
     text-align: center;
@@ -97,6 +107,9 @@ function onQuestCreated(quest: Quest){
   justify-content: space-between;
   align-items: flex-start;
   gap: 20px;
+  @media (max-width: 400px) {
+    flex-direction: column;
+  }
   &__name{
     font-size: 28px;
   }

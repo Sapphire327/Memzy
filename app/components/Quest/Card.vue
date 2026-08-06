@@ -15,7 +15,10 @@
         <p v-if='quest.hint' class='quest__hint'>Подсказка: {{ quest.hint }}</p>
         <p v-if='quest.exampleInText' class='quest__example'>Пример: {{ quest.exampleInText }}</p>
     </div>
-    <FormButton class='quest__show-answer' @click='()=>{showAnswer=!showAnswer}'>{{showAnswer?"Скрыть ответ":"Показать ответ"}}</FormButton>
+    <div class='quest__actions'>
+      <FormButton v-if='editable' class='quest__edit' @click='emit("edit", quest)'>Редактировать</FormButton>
+      <FormButton class='quest__show-answer' @click='()=>{showAnswer=!showAnswer}'>{{showAnswer?"Скрыть ответ":"Показать ответ"}}</FormButton>
+    </div>
   </div>
 </template>
 
@@ -23,13 +26,19 @@
 import type { Quest } from '#shared/schemas'
 import getImageUrl from '~/utils/getImageUrl'
 
-const props = defineProps<{ quest: Quest }>()
+const props = withDefaults(defineProps<{ quest: Quest, editable?: boolean }>(), {
+  editable: false
+})
+const emit = defineEmits<{
+  (e: 'edit', quest: Quest): void
+}>()
 const showAnswer = ref(false)
 const questImg = computed(() => getImageUrl(props.quest.questImgName))
 const answerImg = computed(() => getImageUrl(props.quest.answerImgName))
 </script>
 
 <style lang='scss' scoped>
+
 .quest{
   background-color: rgba(255, 255, 255, 1);
   border-radius: 10px;
@@ -37,10 +46,14 @@ const answerImg = computed(() => getImageUrl(props.quest.answerImgName))
   // flex-direction: column;
   padding-bottom: 55px;
   position: relative;
-
+  container-type: inline-size;
+  container-name: quest-container;
   &__top{
     display: flex;
     gap: 6px;
+    @container  quest-container (max-width: 350px) {
+      flex-direction: column;
+    }
   }
   &__answer-text,&__question-text{
     font-size: 20px;
@@ -54,17 +67,27 @@ const answerImg = computed(() => getImageUrl(props.quest.answerImgName))
     opacity: 0.8;
   }
   &__img{
-    height: 100px;
-    width: fit-content;
-    object-fit: contain;
+    width: 170px;
+    object-fit: cover;
     border-radius: 16px;
+    aspect-ratio: 16/9;
   }
   &__show-answer{
     font-size: 14px;
     padding:8px;
+  }
+  &__actions{
     position: absolute;
     bottom: 5px;
+    left: 5px;
     right: 5px;
+    display: flex;
+    gap: 6px;
+  }
+  &__edit{
+    font-size: 14px;
+    padding:8px;
+    margin-right: auto;
   }
   &__answer,&__question{
     flex: 1 1 50%;

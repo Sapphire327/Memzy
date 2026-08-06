@@ -4,7 +4,7 @@
         <li><NuxtLink class='header__link' to='/'>Memzy</NuxtLink></li>
         <li><NuxtLink class='header__link' to='/packs'>Мои списки</NuxtLink></li>
         <li v-if='!loggedIn'><NuxtLink class='header__link' to='/auth/signin'>Вход</NuxtLink></li>
-        <li v-else><NuxtLink class='header__link' to='/profile'>Профиль {{ user?.name }}</NuxtLink></li>
+        <li v-else><NuxtLink class='header__link' to='/profile'>{{ user?.name }}</NuxtLink></li>
       </ul>
   </header>
 </template>
@@ -33,8 +33,12 @@ onMounted(async()=>{
     padding: 10px 20px;
     transition: all 0.3s ease;
 
-    @media (max-width: 500px) {
+    @media (max-width: 630px) {
       font-size: 22px;
+      padding: 7px 13px;
+    }
+    @media (max-width: 350px) {
+      font-size: 18px;
       padding: 7px 13px;
     }
     &:hover{
@@ -48,7 +52,7 @@ onMounted(async()=>{
     display: flex;
     align-items: stretch;
     border-radius: 10px;
-    @media (max-width: 430px) {
+    @media (max-width: 630px) {
       flex-direction: column;
       width: 80%;
       text-align: center;
@@ -58,13 +62,13 @@ onMounted(async()=>{
 
       &:first-child>.header__link{
         border-radius: 10px 0 0 10px;
-         @media (max-width: 430px) {
+         @media (max-width: 630px) {
           border-radius: 10px 10px 0 0;
         }
       }
       &:last-child>.header__link{
         border-radius: 0 10px 10px 0;
-        @media (max-width: 430px) {
+        @media (max-width: 630px) {
            border-radius: 0 0 10px 10px;
         }
       }

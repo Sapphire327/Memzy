@@ -35,6 +35,14 @@ export const questCreateDtoSchema = z.object({
     questImgName:z.string().max(255).optional(),
     answerImgName:z.string().max(255).optional(),
 })
+export const questEditDtoSchema = z.object({
+    quest:z.string().min(1,'Введите вопрос').max(500,'Вопрос не может быть длиннее 500 символов'),
+    answer:z.string().min(1,'Введите ответ').max(500,'Ответ не может быть длиннее 500 символов'),
+    hint:z.string().max(200,'Подсказка не может быть длиннее 200 символов').optional(),
+    exampleInText:z.string().max(500,'Пример не может быть длиннее 500 символов').optional(),
+    removeQuestImage:z.boolean().optional(),
+    removeAnswerImage:z.boolean().optional(),
+})
 export interface Quest{
     id:number,
     quest:string|null,

@@ -75,5 +75,9 @@ export default defineNuxtConfig({
       },
     ],
   },
-
+  postcss: {
+      plugins: {
+        'postcss-hover-media-feature': {},
+      },
+    },
 })

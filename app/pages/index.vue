@@ -110,6 +110,13 @@
       font-size: 16px !important;
       width: 230px !important;
     }
+    @media (max-width: 300px) {
+      right: auto;
+      left: 30px;
+      bottom: -245px;
+      font-size: 16px !important;
+      width: 200px !important;
+    }
   }
 }
 

@@ -1,5 +1,5 @@
 <template>
-  <NuxtLink :to="'/packs/' + pack.id">
+  <NuxtLink class='link' :to="'/packs/' + pack.id">
     <div class='pack' @mouseenter=startAnimation>
       <div class='reflect'  :class={reflectAnimation:isAnimationPlaying}></div>
       <p class='pack__name'>{{ pack.name}}</p>
@@ -33,6 +33,9 @@ onBeforeUnmount(()=>{
 </script>
 
 <style lang='scss' scoped>
+.link{
+-webkit-tap-highlight-color: transparent;
+}
 .reflect{
   background-color: white;
   opacity: 0.7;

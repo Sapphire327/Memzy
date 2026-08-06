@@ -83,6 +83,9 @@
     @media (max-width: 500px) {
      font-size: 18px;
     }
+    @media (max-width: 320px) {
+     font-size: 15px;
+    }
   }
 }
 </style>
