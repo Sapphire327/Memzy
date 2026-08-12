@@ -7,5 +7,5 @@ if (!databaseUrl) {
 
 export const db = drizzle(databaseUrl,{schema});
 export const tables = schema;
-export { and, eq, not, or } from 'drizzle-orm'
+export { and, eq, not, or, lt } from 'drizzle-orm'
 

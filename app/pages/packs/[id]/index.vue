@@ -16,7 +16,7 @@
     </div>
 
     <div class='main__top-buttons'>
-      <FormButton class='form__button'>Изучить</FormButton>
+      <NuxtLink :to="`/packs/${packId}/repeat`"><FormButton class='form__button'>Изучить</FormButton></NuxtLink>
       <FormButton class='form__button' @click='openCreatePopup'>Добавить слово</FormButton>
     </div>
 

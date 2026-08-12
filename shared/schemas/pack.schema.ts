@@ -53,3 +53,9 @@ export interface Quest{
     answerImgName:string|null,
     packId:number
 }
+export interface RepeatableQuest extends Quest{
+    lastRepeated:Date|null,
+    NextRepeated:Date|null,
+    level:number|null,
+    stage:number|null,
+}

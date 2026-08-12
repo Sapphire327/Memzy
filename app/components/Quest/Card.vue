@@ -59,6 +59,7 @@ const answerImg = computed(() => getImageUrl(props.quest.answerImgName))
     font-size: 20px;
     margin-bottom: 5px;
     color: var(--main-second-darker);
+    flex-grow: 1;
   }
   &__hint, &__example{
     margin-top: 10px;
@@ -91,6 +92,8 @@ const answerImg = computed(() => getImageUrl(props.quest.answerImgName))
   }
   &__answer,&__question{
     flex: 1 1 50%;
+    display: flex;
+    flex-direction: column;
   }
 }
 </style>

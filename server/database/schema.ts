@@ -1,4 +1,4 @@
-import { bigint, boolean, pgTable, text, timestamp, varchar } from "drizzle-orm/pg-core"
+import { bigint, boolean, integer, pgTable, text, timestamp, varchar } from "drizzle-orm/pg-core"
 
 export const users = pgTable("users", {
   id: bigint({mode:'number'}).primaryKey().generatedByDefaultAsIdentity(),
@@ -33,3 +33,30 @@ export const quests = pgTable("quest",{
   exampleInText:text(),
   packId:  bigint({mode:'number'}).notNull().references(() => packs.id),
 })
+export const questsUsers = pgTable("questsUsers",{
+  id: bigint({mode:'number'}).primaryKey().generatedByDefaultAsIdentity(),
+  questId:  bigint({mode:'number'}).notNull().references(() => quests.id),
+  userId:  bigint({mode:'number'}).notNull().references(() => users.id),
+  lastRepeated:timestamp(),
+  NextRepeated:timestamp(),
+  level:integer(),
+  stage:integer(),
+})
+export const packsUsersSubscribe = pgTable("packsUsersSubscribe",{
+  id: bigint({mode:'number'}).primaryKey().generatedByDefaultAsIdentity(),
+  packId:  bigint({mode:'number'}).notNull().references(() => packs.id),
+  userId:  bigint({mode:'number'}).notNull().references(() => users.id),
+})
+// level - уровень пройденного задание
+// 1 - просмотр карточки
+// 2 - собрать слово
+// 3 - собрать слово
+// 4 - написать слово
+
+// stage - уровень повторения
+// 1	25 минут
+// 2	1 день
+// 3	3 дня
+// 4	1 неделя
+// 5	2 недели
+// 6	1 месяц

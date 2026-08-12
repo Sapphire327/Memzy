@@ -88,7 +88,7 @@
       line-height: 1.2em;
   }
   &__sticker{
-    width: 250px !important;
+    width: 260px !important;
     position: absolute;
     bottom: -130%;
     right: -15%;
