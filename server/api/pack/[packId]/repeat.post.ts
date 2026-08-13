@@ -71,8 +71,8 @@ export default defineEventHandler(async (event) => {
           stage = Math.min(MAX_STAGE, (current?.stage ?? 0) + 1)
           nextRepeat = new Date(now.getTime() + intervalMs(stage))
         } else {
-          level = 1
-          stage = Math.max(1, (current?.stage ?? 1) - 1)
+          stage = 1
+          level = Math.max(1, (current?.level ?? 1) - 1)
           nextRepeat = new Date(now.getTime() + intervalMs(stage))
         }
 

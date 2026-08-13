@@ -11,8 +11,8 @@ export default async function getUserPack(event: H3Event) {
       data: []
     })
   }
-  const paramId = getRouterParam(event, 'id');
-  if(!paramId || Number.isNaN(parseInt(paramId))){
+  const paramPackId = getRouterParam(event, 'packId');
+  if(!paramPackId || Number.isNaN(parseInt(paramPackId))){
     throw createError({
       statusCode: 400,
       statusMessage: "incorrect id",
@@ -20,7 +20,7 @@ export default async function getUserPack(event: H3Event) {
       data: []
     });
   }
-  const id = parseInt(paramId)
+  const id = parseInt(paramPackId)
   const pack = await db.query.packs.findFirst({
     where: eq(tables.packs.id, id),
   });

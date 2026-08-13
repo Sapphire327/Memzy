@@ -7,6 +7,14 @@ import getUserRepeatPack from '~~/server/utils/getUserRepeatPack'
 export default defineEventHandler(async (event) => {
   try {
     const { pack, userId } = await getUserRepeatPack(event)
+    const isPractice = getQuery(event).practice === 'true'
+
+    const where = isPractice
+      ? eq(tables.quests.packId, pack.id)
+      : and(
+          eq(tables.quests.packId, pack.id),
+          or(isNull(tables.questsUsers.NextRepeated), lt(tables.questsUsers.NextRepeated, new Date()))
+        )
 
     const quests: RepeatableQuest[] = await db.select({
       id: tables.quests.id,
@@ -27,10 +35,7 @@ export default defineEventHandler(async (event) => {
         eq(tables.questsUsers.questId, tables.quests.id),
         eq(tables.questsUsers.userId, userId)
       ))
-      .where(and(
-        eq(tables.quests.packId, pack.id),
-        or(isNull(tables.questsUsers.NextRepeated), lt(tables.questsUsers.NextRepeated, new Date()))
-      ))
+      .where(where)
       .orderBy(asc(tables.quests.id))
 
     return { quests }

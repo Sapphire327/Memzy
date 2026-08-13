@@ -15,6 +15,7 @@ export interface Pack{
   description:string|null
   isPublic:boolean
   tags:z.output<typeof TagSchema>[]
+  authorId:number
 }
 export interface UsersPack extends Pack{
   lastRepeat?:Date

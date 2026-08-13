@@ -10,29 +10,33 @@
           </li>
         </ul>
       </div>
-      <NuxtLink :to="'/packs/edit/' + route.params.id">
+      <NuxtLink v-if='isOwner' :to="'/packs/edit/' + route.params.packId">
         <FormButton class='pack-info__edit-btn'>Редактировать</FormButton>
       </NuxtLink>
     </div>
 
     <div class='main__top-buttons'>
       <NuxtLink :to="`/packs/${packId}/repeat`"><FormButton class='form__button'>Изучить</FormButton></NuxtLink>
-      <FormButton class='form__button' @click='openCreatePopup'>Добавить слово</FormButton>
+      <NuxtLink :to="`/packs/${packId}/repeat?practice=true`"><FormButton class='form__button'>Повторить все</FormButton></NuxtLink>
+      <FormButton v-if='isOwner' class='form__button' @click='openCreatePopup'>Добавить слово</FormButton>
     </div>
 
     <AppModal v-model:is-open='isOpen'>
       <QuestCreateForm v-if='packId' :pack-id='packId' :quest='editingQuest' @created='onQuestCreated' @updated='onQuestUpdated'></QuestCreateForm>
     </AppModal>
 
+    <AppConfirm v-model:is-open='deleteConfirmOpen' title='Удалить слово?' :message='deleteQuest?.quest || undefined' @confirm='onConfirmDelete'></AppConfirm>
+
     <div class='main__quests'>
-      <QuestCard v-if='questsData?.quests?.length' v-for="quest in questsData?.quests" :quest='quest' editable @edit='openEditPopup'></QuestCard>
+      <QuestCard v-if='questsData?.quests?.length' v-for="quest in questsData?.quests" :quest='quest' :editable='isOwner' @edit='openEditPopup' @delete='openDeletePopup'></QuestCard>
       <p v-else class='main__empty'>В этом паке пока нет слов</p>
     </div>
   </div>
 </template>
 
 <script lang="ts" setup>
-import type { Quest } from '#shared/schemas'
+import type { Quest, RepeatableQuest } from '#shared/schemas'
+import type { FetchError } from 'ofetch'
 import authMiddleware from '~/middleware/auth'
 
 definePageMeta({
@@ -41,14 +45,19 @@ definePageMeta({
 
 const route = useRoute();
 const packId = computed<number|null>(() => {
-  if(route.params.id && typeof route.params.id === 'string')
-    return parseInt(route.params.id);
+  if(route.params.packId && typeof route.params.packId === 'string')
+    return parseInt(route.params.packId);
   else
     return null
 });
 
+const { user } = useUserSession()
+const isOwner = computed(() => {
+  return !!user.value?.id && !!data.value?.pack && user.value.id === data.value.pack.authorId
+});
+
 const { data } = await useFetch<{ pack: UsersPack }>(`/api/pack/${packId.value}`)
-const { data: questsData, refresh: refreshQuests } = await useFetch<{ quests: Quest[] }>(`/api/pack/${packId.value}/quests`)
+const { data: questsData, refresh: refreshQuests } = await useFetch<{ quests: RepeatableQuest[] }>(`/api/pack/${packId.value}/quests`)
 
 const isOpen = ref(false)
 const editingQuest = ref<Quest | null>(null)
@@ -71,6 +80,39 @@ function onQuestCreated(quest: Quest){
 function onQuestUpdated(quest: Quest){
   isOpen.value = false
   refreshQuests()
+}
+
+const deleteConfirmOpen = ref(false)
+const deleteQuest = ref<RepeatableQuest | null>(null)
+
+function openDeletePopup(quest: RepeatableQuest){
+  deleteQuest.value = quest
+  deleteConfirmOpen.value = true
+}
+
+async function onConfirmDelete(){
+  if(!deleteQuest.value || !packId.value) return
+  try{
+    await $fetch(`/api/pack/${packId.value}/quests/${deleteQuest.value.id}`,{
+      method:'DELETE'
+    })
+    const toast = useToast()
+    toast.success({
+      title: 'Удалено',
+      message: 'Слово удалено',
+    })
+    deleteConfirmOpen.value = false
+    deleteQuest.value = null
+    refreshQuests()
+  }
+  catch(e){
+    const fetchError = e as FetchError
+    const toast = useToast()
+    toast.error({
+      title: 'Ошибка',
+      message: isApiError(fetchError.data) ? (fetchError.data.message || 'Не удалось удалить слово') : 'Не удалось удалить слово',
+    })
+  }
 }
 </script>
 

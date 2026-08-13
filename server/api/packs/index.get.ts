@@ -28,6 +28,7 @@ export default defineEventHandler(async (event) => {
           description: pack.description,
           isPublic: pack.isPublic ?? false,
           tags: tags,
+          authorId: pack.authorId,
           lastRepeat:undefined
         };
       })

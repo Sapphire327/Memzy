@@ -4,7 +4,7 @@
       <div class='container main'>
         <slot />
       </div>
-      <footer>Подвал</footer>
+      <AppFooter></AppFooter>
   </div>
   
 </template>

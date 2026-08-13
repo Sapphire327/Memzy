@@ -7,8 +7,8 @@
 <script lang="ts" setup>
   const route = useRoute();
   const packId = computed<number|null>(() => {
-    if(route.params.id && typeof route.params.id === 'string')
-      return parseInt(route.params.id); 
+    if(route.params.packId && typeof route.params.packId === 'string')
+      return parseInt(route.params.packId); 
     else
       return null
   });
