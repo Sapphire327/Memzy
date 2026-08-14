@@ -57,6 +57,7 @@ const isOwner = computed(() => {
 });
 
 const { data } = await useFetch<{ pack: UsersPack }>(`/api/pack/${packId.value}`)
+useHead(() => ({ title: data.value?.pack.name ?? 'Пак' }))
 const { data: questsData, refresh: refreshQuests } = await useFetch<{ quests: RepeatableQuest[] }>(`/api/pack/${packId.value}/quests`)
 
 const isOpen = ref(false)

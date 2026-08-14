@@ -18,11 +18,12 @@
         </div>
       </div>
     </section>
-    <MainPageHowItWorks></MainPageHowItWorks>
+    <MainPageHowItWorks class='how-it-works'></MainPageHowItWorks>
   </div> 
 </template>
 
 <script lang="ts" setup>
+  useHead({ title: 'Memzy' })
   const words = [
     'Resourceful - находчивый',
     'Wise - мудрый',
@@ -72,10 +73,15 @@
   @media (max-width: 660px) {
     max-width: 500px;
   }
+  @media (max-width: 530px) {
+    padding-bottom: 40px;
+  }
   &__list{
     margin-left: 15px;
     display: flex;
     flex-direction: column;
+    font-size: 22px;
+    
     @media (max-width: 660px) {
         font-size: 18px;
         gap: 4px;
@@ -91,11 +97,11 @@
   &__sticker{
     width: 260px !important;
     position: absolute;
-    bottom: -130%;
+    bottom: -170%;
     right: -15%;
     font-size: 18px;
     @media (max-width: 880px) {
-      bottom: -151%;
+      bottom: -181%;
       right: 3%;
     }
     @media (max-width: 660px) {
@@ -107,7 +113,7 @@
      @media (max-width: 530px) {
       right: auto;
       left: 30px;
-      bottom: -245px;
+      bottom: -225px;
       font-size: 16px !important;
       width: 230px !important;
     }
@@ -120,6 +126,11 @@
     }
   }
 }
-
+.how-it-works{
+    margin-top: 20px;
+  max-width: 1200px;
+  margin-left: auto;
+  margin-right: auto;
+}
   
 </style>

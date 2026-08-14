@@ -5,6 +5,7 @@
 </template>
 
 <script lang="ts" setup>
+  useHead({ title: 'Редактирование пака' })
   const route = useRoute();
   const packId = computed<number|null>(() => {
     if(route.params.packId && typeof route.params.packId === 'string')

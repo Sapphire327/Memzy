@@ -20,6 +20,7 @@ import authMiddleware from '~/middleware/auth'
 definePageMeta({
  middleware: authMiddleware,
 })
+useHead({ title: 'Повторение' })
 const route = useRoute();
 const packId = computed<number|null>(() => {
   if(route.params.packId && typeof route.params.packId === 'string')

@@ -6,6 +6,7 @@
 
 <script setup lang="ts">
 import authMiddleware from '~/middleware/auth'
+useHead({ title: 'Профиль' })
 definePageMeta({
  middleware: authMiddleware,
 })

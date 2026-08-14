@@ -16,6 +16,8 @@
 import type { FetchError } from 'ofetch'
 import { z } from 'zod/v4'
 
+useHead({ title: 'Вход' })
+
 const { loggedIn } = useUserSession()
 if(loggedIn.value){
    navigateTo('/')

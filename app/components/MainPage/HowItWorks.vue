@@ -1,6 +1,6 @@
 <template>
   <section class='how-it-works'>
-    <h2 class='how-it-works__heading'>Как работает запоминание</h2>
+    <h2 class='how-it-works__heading'>Простой метод запоминания</h2>
     <div class='how-it-works__blocks'>
       <div class='how-it-works__block'>
         <h3 class='how-it-works__title'>Этапы изучения слова</h3>
@@ -39,15 +39,13 @@ const intervals = ['25 минут', '1 день', '3 дня', '1 неделя', 
 
 <style scoped lang='scss'>
 .how-it-works{
-  margin-top: 40px;
-  max-width: 1200px;
-  margin-left: auto;
-  margin-right: auto;
+
 
   &__heading{
     text-align: center;
     font-size: 26px;
     color: var(--main-second-darker);
+        // color: var(--dark-text);
     margin-bottom: 24px;
   }
   &__blocks{
@@ -76,7 +74,8 @@ const intervals = ['25 минут', '1 день', '3 дня', '1 неделя', 
   }
   &__step{
     display: flex;
-    align-items: flex-start;
+    // align-items: flex-start;
+    align-items: center;
     gap: 10px;
     font-size: 17px;
     color: var(--dark-text);

@@ -5,7 +5,7 @@
 </template>
 
 <script lang="ts" setup>
-
+useHead({ title: 'Восстановление пароля' })
 </script>
 
 <style>

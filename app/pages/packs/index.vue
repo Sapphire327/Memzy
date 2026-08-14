@@ -14,6 +14,7 @@
 <script lang="ts" setup>
 import type { UsersPack } from '#shared/schemas'
 import authMiddleware from '~/middleware/auth'
+useHead({ title: 'Мои списки' })
 definePageMeta({
  middleware: authMiddleware,
 })
