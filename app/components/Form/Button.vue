@@ -9,7 +9,7 @@
 <style scoped>
   .button{
     display: block;
-    font-size: 18px;
+    font-size: 21px;
     border-radius: 6px;
     padding: 16px 16px;
     color: white;
