@@ -2,7 +2,7 @@ import { and, db, eq, tables } from '#server/database/utils/database'
 import { inArray } from 'drizzle-orm'
 import { z } from 'zod'
 import ErrorHandler from '~~/server/utils/ErrorHandler'
-import getUserRepeatPack from '~~/server/utils/getUserRepeatPack'
+import getAccessiblePackIds from '~~/server/utils/getAccessiblePackIds'
 
 const answersSchema = z.array(z.object({
   questId: z.number().int().positive(),
@@ -27,21 +27,39 @@ function intervalMs(stage: number): number {
 
 export default defineEventHandler(async (event) => {
   try {
-    const { pack, userId } = await getUserRepeatPack(event)
+    const session = await getUserSession(event)
+    if (!session?.user) {
+      throw createError({
+        statusCode: 401,
+        statusMessage: "Unauthorized",
+        message: "Ошибка авторизации",
+        data: []
+      })
+    }
+    const userId = session.user.id
+
     const answers = answersSchema.parse(await readBody(event))
     const questIds = answers.map((answer) => answer.questId)
 
-    const quests = await db.select({ id: tables.quests.id })
+    const quests = await db.select({ id: tables.quests.id, packId: tables.quests.packId })
       .from(tables.quests)
-      .where(and(
-        eq(tables.quests.packId, pack.id),
-        inArray(tables.quests.id, questIds)
-      ))
+      .where(inArray(tables.quests.id, questIds))
     if (quests.length !== questIds.length) {
       throw createError({
         statusCode: 400,
-        statusMessage: "quests do not belong to this pack",
-        message: "Некоторые слова не принадлежат этому паку",
+        statusMessage: "quests do not exist",
+        message: "Некоторые слова не найдены",
+        data: []
+      })
+    }
+
+    const accessiblePackIds = await getAccessiblePackIds(userId)
+    const accessibleSet = new Set(accessiblePackIds)
+    if (quests.some((quest) => !accessibleSet.has(quest.packId))) {
+      throw createError({
+        statusCode: 400,
+        statusMessage: "quests are not accessible",
+        message: "Некоторые слова недоступны",
         data: []
       })
     }

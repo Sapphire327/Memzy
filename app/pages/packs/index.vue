@@ -4,6 +4,7 @@
     <div class='main__top'>
       <FormButton class='main__create-btn' @click="openPopup">Создать пак</FormButton>
       <FormButton class='main__create-btn' @click="openCatalog">Каталог паков</FormButton>
+      <FormButton class='main__create-btn' @click="repeatAll">Повторить все</FormButton>
     </div>
     <h2 v-if='data?.myPacks && data.myPacks.length' class='main__section-title'>Мои паки</h2>
     <div v-if='data?.myPacks && data.myPacks.length' class='main__packs'>
@@ -39,6 +40,9 @@ function openPopup(){
 }
 function openCatalog(){
   navigateTo('/packs/catalog')
+}
+function repeatAll(){
+  navigateTo('/packs/repeat')
 }
 const isOpen = ref(false)
 </script>

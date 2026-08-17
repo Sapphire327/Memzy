@@ -8,7 +8,7 @@
       <p class='finish__text'>Верно {{ rightCount }} из {{ total }}</p>
     </div>
 
-    <NuxtLink class='finish__link' :to="`/packs/${packId}`">
+    <NuxtLink class='finish__link' :to='backTo'>
       <FormButton class='finish__btn'>К списку</FormButton>
     </NuxtLink>
   </div>
@@ -20,7 +20,7 @@ import type { RepeatableQuest } from '#shared/schemas'
 const props = defineProps<{
   quests: RepeatableQuest[]
   results: Map<number, boolean>
-  packId: number
+  backTo: string
 }>()
 
 const total = computed(() => props.quests.length)
