@@ -1,11 +1,11 @@
 <template>
   <header class='header'>
-      <ul class='header__list'>
-        <li><NuxtLink class='header__link' to='/'>Memzy</NuxtLink></li>
-        <li><NuxtLink class='header__link' to='/packs'>Мои списки</NuxtLink></li>
-        <li v-if='!loggedIn'><NuxtLink class='header__link' to='/auth/signin'>Вход</NuxtLink></li>
-        <li v-else><NuxtLink class='header__link' to='/profile'>{{ user?.name }}</NuxtLink></li>
-      </ul>
+      <nav class='header__list'>
+        <NuxtLink class='header__link' to='/'>Memzy</NuxtLink>
+        <NuxtLink class='header__link' to='/packs'>Мои списки</NuxtLink>
+        <NuxtLink v-if='!loggedIn' class='header__link' to='/auth/signin'>Вход</NuxtLink>
+        <NuxtLink  v-else class='header__link' to='/profile'>{{ user?.name }}</NuxtLink>
+      </nav>
   </header>
 </template>
 
@@ -19,59 +19,42 @@ onMounted(async()=>{
 
 <style lang='scss' scoped>
 .header{
-  display: flex;
-  justify-items: center;
-  padding-top: 10px;
-
+  width: 100%;
+  background-color: white;
+  &__list{
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: stretch;
+  }
   &__link{
     display: flex;
-    font-size: 24px;
-    color: var(--dark-text);
-    transition: color 0.3s ease;
-    white-space: nowrap;
-    width: 100%;
-    padding: 10px 20px;
+    align-items: center;
+    font-size: 28px;
+    color: #621114;
+    // padding: 10px 0 10px 0;
     transition: all 0.3s ease;
-
-    @media (max-width: 630px) {
-      font-size: 22px;
-      padding: 7px 13px;
+    flex: 0 1 260px;
+    text-align: center;
+    justify-content: center;
+    white-space: nowrap;
+    height: 60px;
+    &:first-child{
+      flex: 1 1 140px;
+      justify-content: right;
+      padding:0 20px;
     }
-    @media (max-width: 350px) {
-      font-size: 18px;
-      padding: 7px 13px;
+    &:last-child{
+      flex: 1 1 140px;
+      justify-content: left;
+      padding:0 20px;
     }
     &:hover{
       background-color: var(--main-second);
       color: white;
     }
-  }
-  &__list{
-    margin: auto;
-    background-color: white;
-    display: flex;
-    align-items: stretch;
-    border-radius: 10px;
-    @media (max-width: 630px) {
-      flex-direction: column;
-      width: 80%;
-      text-align: center;
-    }
-    &>li{
-      height: 100%;
-
-      &:first-child>.header__link{
-        border-radius: 10px 0 0 10px;
-         @media (max-width: 630px) {
-          border-radius: 10px 10px 0 0;
-        }
-      }
-      &:last-child>.header__link{
-        border-radius: 0 10px 10px 0;
-        @media (max-width: 630px) {
-           border-radius: 0 0 10px 10px;
-        }
-      }
+    @media (max-width: 450px) {
+      font-size: 20px;
     }
   }
 }

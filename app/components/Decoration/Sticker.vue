@@ -49,10 +49,9 @@
 <style scoped lang='scss'>
 
   .sticker{
-
     width: 250px;
     border-radius: 8px;
-    transform: rotate(15deg);
+    transform: rotate(-15deg);
     aspect-ratio: 1/1;
     background-color: var(--main-second);
     box-shadow:4px 10px 6px 0px rgba(34, 60, 80, 0.2);
@@ -62,13 +61,12 @@
       &>p{
         color: white;
         font-size: inherit;
-        // font-size: 18px;
         line-height: 1.5em;
       }
     }
     &__button{
         top: -30px;
-        left: 30px;
+        right: 0px;
         position: absolute;
       }
   }

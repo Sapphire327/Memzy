@@ -15,6 +15,7 @@
 
 <style>
   .wrapper{
+    padding-top: 50px;
     display: flex;
     justify-content: space-between;
     flex-direction: column;

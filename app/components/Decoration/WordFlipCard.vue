@@ -63,7 +63,7 @@
     left: 0;
     background-color: rgba($color: #ffffff, $alpha: 0.2);
     border: 3px solid white;
-    color: var(--dark-text);
+    // color: var(--dark-text);
     border-radius: 8px;
     backface-visibility: hidden;
   }
@@ -77,15 +77,15 @@
   }
   &__text{
     text-align: v-bind('props.textAlign');
-    font-size: 24px;
+    // font-size: 27px;
     padding: 10px 10px;
     width: 100%;
-    @media (max-width: 500px) {
-     font-size: 18px;
-    }
-    @media (max-width: 320px) {
-     font-size: 15px;
-    }
+    // @media (max-width: 500px) {
+    //  font-size: 18px;
+    // }
+    // @media (max-width: 320px) {
+    //  font-size: 15px;
+    // }
   }
 }
 </style>

@@ -16,8 +16,13 @@
     </div>
 
     <div class='main__top-buttons'>
-      <NuxtLink :to="`/packs/${packId}/repeat`"><FormButton class='form__button'>Изучить</FormButton></NuxtLink>
-      <NuxtLink :to="`/packs/${packId}/repeat?practice=true`"><FormButton class='form__button'>Повторить все</FormButton></NuxtLink>
+      <template v-if='isOwner || isSubscribed'>
+        <NuxtLink :to="`/packs/${packId}/repeat`"><FormButton class='form__button'>Изучить</FormButton></NuxtLink>
+        <NuxtLink :to="`/packs/${packId}/repeat?practice=true`"><FormButton class='form__button'>Повторить все</FormButton></NuxtLink>
+      </template>
+      <template v-else>
+        <FormButton class='form__button' @click='subscribe'>Подписаться</FormButton>
+      </template>
       <FormButton v-if='isOwner' class='form__button' @click='openCreatePopup'>Добавить слово</FormButton>
     </div>
 
@@ -55,8 +60,9 @@ const { user } = useUserSession()
 const isOwner = computed(() => {
   return !!user.value?.id && !!data.value?.pack && user.value.id === data.value.pack.authorId
 });
+const isSubscribed = computed(() => !!data.value?.pack?.isSubscribed)
 
-const { data } = await useFetch<{ pack: UsersPack }>(`/api/pack/${packId.value}`)
+const { data, refresh } = await useFetch<{ pack: UsersPack }>(`/api/pack/${packId.value}`)
 useHead(() => ({ title: data.value?.pack.name ?? 'Пак' }))
 const { data: questsData, refresh: refreshQuests } = await useFetch<{ quests: RepeatableQuest[] }>(`/api/pack/${packId.value}/quests`)
 
@@ -81,6 +87,29 @@ function onQuestCreated(quest: Quest){
 function onQuestUpdated(quest: Quest){
   isOpen.value = false
   refreshQuests()
+}
+
+async function subscribe(){
+  if(!packId.value) return
+  try{
+    await $fetch(`/api/packs/${packId.value}/subscribe`,{
+      method:'POST'
+    })
+    const toast = useToast()
+    toast.success({
+      title: 'Подписано',
+      message: 'Вы подписались на пак',
+    })
+    await refresh()
+  }
+  catch(e){
+    const fetchError = e as FetchError
+    const toast = useToast()
+    toast.error({
+      title: 'Ошибка',
+      message: isApiError(fetchError.data) ? (fetchError.data.message || 'Не удалось подписаться') : 'Не удалось подписаться',
+    })
+  }
 }
 
 const deleteConfirmOpen = ref(false)

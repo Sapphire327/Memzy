@@ -19,6 +19,11 @@ export interface Pack{
 }
 export interface UsersPack extends Pack{
   lastRepeat?:Date
+  nextRepeat?:Date
+  isSubscribed?:boolean
+}
+export interface CatalogPack extends Pack{
+  isSubscribed: boolean
 }
 export const packEditDtoSchema= z.object({
     id:z.number(),

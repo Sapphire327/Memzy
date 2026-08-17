@@ -9,7 +9,8 @@
           <Tag :fontSize='12' class='pack__tag' :tag='tag' :show-delete-button=false></Tag>
         </li>
       </ul>
-      <p v-if='pack.lastRepeat' class='pack__last-repeat'>Последнее повторение {{ daysAgoString(pack.lastRepeat) }}</p>
+      <p v-if='pack.lastRepeat' class='pack__last-repeat'>Последнее повторение: {{ daysAgoString(new Date(pack.lastRepeat)) }}</p>
+      <p v-if='pack.nextRepeat' class='pack__last-repeat'>Следующее повторение: {{ untilString(new Date(pack.nextRepeat)) }}</p>
     </div>
   </NuxtLink>
   
@@ -17,6 +18,8 @@
 
 <script lang="ts" setup>
 import type { UsersPack } from '#shared/schemas'
+import daysAgoString from '~/utils/daysAgoString'
+import untilString from '~/utils/untilString'
 const {pack} = defineProps<{pack:UsersPack}>()
 const isAnimationPlaying = ref(false)
 const timeoutId = ref<null| NodeJS.Timeout>(null);
@@ -86,6 +89,11 @@ onBeforeUnmount(()=>{
     font-size: 16px;
     color: var(--dark-text);
 
+  }
+  &__last-repeat{
+    font-size: 14px;
+    color: var(--dark-text);
+    opacity: 0.7;
   }
 
 }

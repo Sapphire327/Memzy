@@ -33,7 +33,7 @@ export default async function getUserViewPack(event: H3Event) {
     })
   }
   if (pack.authorId === session.user.id) {
-    return { pack, userId: session.user.id, isOwner: true }
+    return { pack, userId: session.user.id, isOwner: true, isSubscribed: false }
   }
   if (pack.isPublic) {
     const subscription = await db.query.packsUsersSubscribe.findFirst({
@@ -42,9 +42,7 @@ export default async function getUserViewPack(event: H3Event) {
         eq(tables.packsUsersSubscribe.userId, session.user.id)
       )
     })
-    if (subscription) {
-      return { pack, userId: session.user.id, isOwner: false }
-    }
+    return { pack, userId: session.user.id, isOwner: false, isSubscribed: !!subscription }
   }
   throw createError({
     statusCode: 403,
