@@ -5,6 +5,7 @@
 </template>
 
 <script lang="ts" setup>
+  import { computed } from 'vue'
 
   const {maxPageCount,pageCount} = defineProps<{pageCount:number;maxPageCount:number;}>()
   const currentPage = defineModel<number>({ required: true,default:1 })

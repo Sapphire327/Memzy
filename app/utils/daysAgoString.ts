@@ -17,10 +17,11 @@ export default (date:Date) => {
   }
   if( diffInDays==0)return'Сегодня'
   if (diffInMonth>0){
-    let result='месяц'
-    if(diffInMonth>1 && diffInMonth<5)
-      result+='а'
-    else result+='ев'
+    let result='месяцев'
+    if(diffInMonth===1)
+      result='месяц'
+    else if(diffInMonth>1 && diffInMonth<5)
+      result='месяца'
     return diffInMonth+' '+result+' назад'
   }else{
     let result=''

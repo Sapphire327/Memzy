@@ -30,6 +30,7 @@
 
 <script lang="ts" setup>
 import type { RepeatableQuest } from '#shared/schemas'
+import { computed, ref } from 'vue'
 import daysAgoString from '~/utils/daysAgoString'
 import getImageUrl from '~/utils/getImageUrl'
 import untilString from '~/utils/untilString'

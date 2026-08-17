@@ -11,6 +11,7 @@
 
 <script lang="ts" setup>
 import type { RepeatableQuest } from '#shared/schemas'
+import { computed, ref } from 'vue'
 import type { FetchError } from 'ofetch'
 
 const props = withDefaults(defineProps<{

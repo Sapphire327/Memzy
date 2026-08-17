@@ -18,6 +18,7 @@
 
 <script lang="ts" setup>
 import type { UsersPack } from '#shared/schemas'
+import { onBeforeUnmount, ref } from 'vue'
 import daysAgoString from '~/utils/daysAgoString'
 import untilString from '~/utils/untilString'
 const {pack} = defineProps<{pack:UsersPack}>()

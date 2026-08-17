@@ -16,6 +16,7 @@
 
 <script lang="ts" setup>
 import type { RepeatableQuest } from '#shared/schemas'
+import { computed } from 'vue'
 
 const props = defineProps<{
   quests: RepeatableQuest[]

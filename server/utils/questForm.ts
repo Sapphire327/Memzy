@@ -1,4 +1,5 @@
 import type { MultiPartData } from 'h3'
+import { createError } from 'h3'
 
 const ALLOWED_EXTENSIONS = ['png', 'jpg', 'jpeg', 'webp', 'gif']
 const ALLOWED_TYPES = ['image/png', 'image/jpeg', 'image/webp', 'image/gif']

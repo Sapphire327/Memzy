@@ -25,6 +25,7 @@
 
 <script lang="ts" setup>
 import type { RepeatableQuest } from '#shared/schemas'
+import { computed } from 'vue'
 import getImageUrl from '~/utils/getImageUrl'
 
 const props = defineProps<{ quest: RepeatableQuest }>()

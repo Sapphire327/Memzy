@@ -3,27 +3,12 @@ import { inArray } from 'drizzle-orm'
 import { z } from 'zod'
 import ErrorHandler from '~~/server/utils/ErrorHandler'
 import getAccessiblePackIds from '~~/server/utils/getAccessiblePackIds'
+import { calculateRepeatResult } from '~~/server/utils/repeat'
 
 const answersSchema = z.array(z.object({
   questId: z.number().int().positive(),
   isRight: z.boolean(),
 })).min(1)
-
-const MAX_LEVEL = 4
-const MAX_STAGE = 6
-
-const STAGE_INTERVALS_MS: Record<number, number> = {
-  1: 25 * 60 * 1000,
-  2: 24 * 60 * 60 * 1000,
-  3: 3 * 24 * 60 * 60 * 1000,
-  4: 7 * 24 * 60 * 60 * 1000,
-  5: 14 * 24 * 60 * 60 * 1000,
-  6: 30 * 24 * 60 * 60 * 1000,
-}
-
-function intervalMs(stage: number): number {
-  return STAGE_INTERVALS_MS[stage] ?? 30 * 24 * 60 * 60 * 1000
-}
 
 export default defineEventHandler(async (event) => {
   try {
@@ -80,19 +65,7 @@ export default defineEventHandler(async (event) => {
       const now = new Date()
       for (const { questId, isRight } of answers) {
         const current = existingMap.get(questId)
-        let level: number
-        let stage: number
-        let nextRepeat: Date | null
-        if (isRight) {
-          const baseLevel = current ? (current.level ?? 0) : 1
-          level = Math.min(MAX_LEVEL, baseLevel + 1)
-          stage = Math.min(MAX_STAGE, (current?.stage ?? 0) + 1)
-          nextRepeat = new Date(now.getTime() + intervalMs(stage))
-        } else {
-          stage = 1
-          level = Math.max(1, (current?.level ?? 1) - 1)
-          nextRepeat = new Date(now.getTime() + intervalMs(stage))
-        }
+        const { level, stage, nextRepeat } = calculateRepeatResult(current, isRight, now)
 
         const values = { lastRepeated: now, NextRepeated: nextRepeat, level, stage }
         if (current) {
