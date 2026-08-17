@@ -39,15 +39,19 @@ onMounted(async()=>{
     justify-content: center;
     white-space: nowrap;
     height: 60px;
-    &:first-child{
+    &:first-child,&:last-child{  
       flex: 1 1 140px;
+      padding:0 36px;
+      @media (max-width: 600px) {
+        padding:0 10px;
+      }
+    }
+
+    &:first-child{
       justify-content: right;
-      padding:0 20px;
     }
     &:last-child{
-      flex: 1 1 140px;
       justify-content: left;
-      padding:0 20px;
     }
     &:hover{
       background-color: var(--main-second);
