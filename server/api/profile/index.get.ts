@@ -3,6 +3,8 @@ import { asc, inArray, isNull, lt, max, min, or, sql } from 'drizzle-orm'
 import type { LevelBucket, ProfileDashboard, ProfilePackProgress } from '#shared/schemas'
 import ErrorHandler from '~~/server/utils/ErrorHandler'
 import getAccessiblePackIds from '~~/server/utils/getAccessiblePackIds'
+import padBuckets from '~~/server/utils/padBuckets'
+import { MAX_LEVEL, MAX_STAGE } from '~~/server/utils/repeat'
 
 export default defineEventHandler(async (event) => {
   try {
@@ -61,15 +63,19 @@ export default defineEventHandler(async (event) => {
         .groupBy(tables.questsUsers.stage)
       : []
 
-    const levelDistribution: LevelBucket[] = levelRows
-      .filter((row) => row.key !== null)
-      .map((row) => ({ key: row.key as number, count: row.value }))
-      .sort((a, b) => a.key - b.key)
+    const levelDistribution = padBuckets(
+      levelRows
+        .filter((row) => row.key !== null)
+        .map((row) => ({ key: row.key as number, count: row.value })),
+      MAX_LEVEL
+    )
 
-    const stageDistribution: LevelBucket[] = stageRows
-      .filter((row) => row.key !== null)
-      .map((row) => ({ key: row.key as number, count: row.value }))
-      .sort((a, b) => a.key - b.key)
+    const stageDistribution = padBuckets(
+      stageRows
+        .filter((row) => row.key !== null)
+        .map((row) => ({ key: row.key as number, count: row.value })),
+      MAX_STAGE
+    )
 
     const learningCount = levelDistribution.reduce((sum, bucket) => sum + bucket.count, 0)
     const fullyLearnedCount = levelDistribution

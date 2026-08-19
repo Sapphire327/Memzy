@@ -33,13 +33,13 @@
           title='Уровни'
           :items='levelDistribution'
           :label-map='levelLabels'
-          description='Уровень последнего пройденного задания'
+          description='Уровень последнего пройденного задания · справа число слов на уровне'
         ></ProfileLevelDistribution>
         <ProfileLevelDistribution
           title='Этапы повторения'
           :items='stageDistribution'
           :label-map='stageLabels'
-          description='Интервал до следующего повторения'
+          description='Интервал до следующего повторения · справа число слов на этапе'
         ></ProfileLevelDistribution>
       </div>
     </section>
@@ -208,6 +208,7 @@ async function exit() {
     gap: 16px;
   }
   &__logout{
+    max-width: 420px;
     padding: 12px 32px;
     font-size: 18px;
   }
