@@ -2,7 +2,6 @@ import { bigint, boolean, integer, pgTable, text, timestamp, varchar } from "dri
 
 export const users = pgTable("users", {
   id: bigint({mode:'number'}).primaryKey().generatedByDefaultAsIdentity(),
-  name: text().notNull(),
   login:varchar({ length: 50 }).notNull().unique(),
   passwordHash: text().notNull(),
   createdAt: timestamp('created_at').defaultNow().notNull()

@@ -1,75 +1,45 @@
-# Nuxt Minimal Starter
+# Memzy
 
-Look at the [Nuxt documentation](https://nuxt.com/docs/getting-started/introduction) to learn more.
+Приложение для изучения слов с помощью интервальных повторений. Пользователи создают собственные наборы слов («паки»), наполняют их карточками с вопросами, ответами и картинками, а затем повторяют материал по расписанию с учётом уровня сложности задания.
 
-## Setup
+## Возможности
 
-Make sure to install dependencies:
+- **Паки слов** — создание, редактирование, теги, приватность/публичность.
+- **Каталог публичных паков** — поиск по названию, описанию и тегам, пагинация, подписка на чужие паки.
+- **Карточки (квесты)** — вопрос, ответ, подсказка, пример, необязательные картинки. Изображения автоматически сжимаются на клиенте (webp/jpg) и хранятся в S3.
+- **Интервальные повторения** — 4 уровня заданий (просмотр карточки, собрать слово, написать слово) и 6 этапов повторения (25 минут → 1 день → 3 дня → 1 неделя → 2 недели → 1 месяц). Режим практики без влияния на статистику.
+- **Личный кабинет** — дашборд «Сегодня» (карточки к повторению, всего изучено, в работе, выучено полностью), статистика по уровням и этапам, прогресс по пакам, смена пароля.
+- **Аутентификация** — вход по логину и паролю. Персональные данные не собираются, поэтому восстановление пароля невозможно — пароль лучше не забывать.
 
-```bash
-# npm
-npm install
+## Технологии
 
-# pnpm
-pnpm install
+- [Nuxt 4](https://nuxt.com) / Vue 3 / TypeScript
+- [Drizzle ORM](https://orm.drizzle.team) + PostgreSQL
+- [S3](https://yandex.cloud) (Yandex Cloud Object Storage) для картинок
+- [nuxt-auth-utils](https://github.com/atinux/nuxt-auth-utils) — сессии
+- [zod](https://zod.dev) — валидация
+- [nuxt-toast](https://github.com/DotCoyote/nuxt-toast) — уведомления
+- [vitest](https://vitest.dev) + @vue/test-utils — тесты
 
-# yarn
-yarn install
 
-# bun
-bun install
+## Структура проекта
+
+app/                     # клиентские страницы и компоненты (Vue/Nuxt)
+  components/            # UI-компоненты (Form, Pack, Quest, Profile, App)
+  pages/                 # страницы приложения
+  middleware/            # middleware авторизации
+server/                  # серверная часть (Nitro)
+  api/                   # REST-эндпоинты
+  database/              # схема БД (Drizzle) и миграции
+  utils/                 # серверные утилиты
+shared/                  # общие типы и zod-схемы
+tests/                   # unit и компонентные тесты (vitest)
 ```
 
-## Development Server
+## Модель данных
 
-Start the development server on `http://localhost:3000`:
-
-```bash
-# npm
-npm run dev
-
-# pnpm
-pnpm dev
-
-# yarn
-yarn dev
-
-# bun
-bun run dev
-```
-
-## Production
-
-Build the application for production:
-
-```bash
-# npm
-npm run build
-
-# pnpm
-pnpm build
-
-# yarn
-yarn build
-
-# bun
-bun run build
-```
-
-Locally preview production build:
-
-```bash
-# npm
-npm run preview
-
-# pnpm
-pnpm preview
-
-# yarn
-yarn preview
-
-# bun
-bun run preview
-```
-
-Check out the [deployment documentation](https://nuxt.com/docs/getting-started/deployment) for more information.
+- `users` — пользователи (логин, хеш пароля).
+- `packs` — наборы слов, принадлежат автору; `packsTags` — теги пакa.
+- `quests` — карточки внутри пака (вопрос, ответ, подсказка, пример, картинки).
+- `questsUsers` — прогресс пользователя по каждой карточке (уровень, этап, даты повторений).
+- `packsUsersSubscribe` — подписки пользователей на публичные паки.

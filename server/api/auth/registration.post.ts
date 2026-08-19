@@ -4,7 +4,6 @@ import ErrorHandler from '~~/server/utils/ErrorHandler'
 
 const registrationSchema = z.object({
   login: z.string().min(3, 'Логин должен быть не менее 3 символов').max(50, 'Логин не может быть длиннее 50 символов'),
-  name: z.string().min(3, 'Имя должно быть не менее 3 символов'),
   password: z.string().min(8, 'Пароль должен быть не менее 8 символов'),
 })
 
@@ -28,14 +27,12 @@ export default defineEventHandler(async (event) => {
       const hashedPassword = await hashPassword(data.password)
       const [user] = await db.insert(tables.users).values({
         login: data.login,
-        name: data.name,
         passwordHash: hashedPassword,
       }).returning()
       if(user)
       await setUserSession(event, {
         user: {
           id: user.id,
-          name: user.name,
           login: user.login
         }
       })

@@ -1,5 +1,4 @@
 export interface ProfileUser {
-  name: string
   login: string
   createdAt: Date
 }

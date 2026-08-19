@@ -1,4 +1,5 @@
 // https://nuxt.com/docs/api/configuration/nuxt-config
+
 export default defineNuxtConfig({
   app: {
     head: {
@@ -42,7 +43,7 @@ export default defineNuxtConfig({
   runtimeConfig:{
     public: {
       cors: {
-        origin: '*', // Для разработки; в продакшене укажите конкретные домены
+        origin: process.env.CORS_ORIGIN || '*', // Для разработки '*', при деплое укажите конкретные домены
         methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
         credentials: true
       },
@@ -62,7 +63,7 @@ export default defineNuxtConfig({
       name:'memzy-session',
       maxAge:60*24*3,
       cookie:{
-        secure: false, // Для HTTP; в продакшене установите true (HTTPS)
+        secure: process.env.SESSION_COOKIE_SECURE === 'true', // Для HTTP (dev) false, для HTTPS (прод) true
         sameSite: 'strict', // Или 'none' для кросс‑доменных запросов 
         path: '/',
         httpOnly: true

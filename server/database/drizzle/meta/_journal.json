@@ -50,6 +50,13 @@
       "when": 1786050825989,
       "tag": "0006_zippy_red_ghost",
       "breakpoints": true
+    },
+    {
+      "idx": 7,
+      "version": "7",
+      "when": 1787152099476,
+      "tag": "0007_narrow_sway",
+      "breakpoints": true
     }
   ]
 }

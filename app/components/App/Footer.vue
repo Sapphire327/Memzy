@@ -5,7 +5,7 @@
       <ul class='footer__list'>
         <li><NuxtLink class='footer__link' to='/packs'>Мои списки</NuxtLink></li>
         <li v-if='!loggedIn'><NuxtLink class='footer__link' to='/auth/signin'>Вход</NuxtLink></li>
-        <li v-else><NuxtLink class='footer__link' to='/profile'>{{ user?.name }}</NuxtLink></li>
+        <li v-else><NuxtLink class='footer__link' to='/profile'>{{ user?.login }}</NuxtLink></li>
       </ul>
     </div>
     <p class='footer__copyright'>© 2026 Memzy</p>

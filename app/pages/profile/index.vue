@@ -3,7 +3,6 @@
     <section class='profile__header'>
       <div class='profile__avatar'>{{ avatarLetter }}</div>
       <div class='profile__info'>
-        <h1 class='profile__name'>{{ data?.user?.name }}</h1>
         <p class='profile__login'>{{ data?.user?.login }}</p>
         <p v-if='registeredString' class='profile__created'>Зарегистрирован {{ registeredString }}</p>
       </div>
@@ -74,7 +73,7 @@ const { data, refresh } = await useFetch<ProfileDashboard>('/api/profile')
 const { user } = useUserSession()
 
 const avatarLetter = computed(() =>
-  (data.value?.user?.name?.[0] ?? user.value?.name?.[0] ?? '?').toUpperCase()
+  (data.value?.user?.login?.[0] ?? user.value?.login?.[0] ?? '?').toUpperCase()
 )
 const registeredString = computed(() => {
   const createdAt = data.value?.user?.createdAt
@@ -146,14 +145,9 @@ async function exit() {
     justify-content: center;
     flex-shrink: 0;
   }
-  &__name{
+  &__login{
     font-size: 28px;
     color: var(--dark-text);
-  }
-  &__login{
-    font-size: 16px;
-    color: var(--dark-text);
-    opacity: 0.8;
   }
   &__created{
     font-size: 14px;

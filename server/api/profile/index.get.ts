@@ -23,7 +23,7 @@ export default defineEventHandler(async (event) => {
 
     const user = await db.query.users.findFirst({
       where: eq(tables.users.id, userId),
-      columns: { name: true, login: true, createdAt: true },
+      columns: { login: true, createdAt: true },
     })
 
     let dueCount = 0
@@ -127,7 +127,7 @@ export default defineEventHandler(async (event) => {
     }))
 
     const dashboard: ProfileDashboard = {
-      user: user ? { name: user.name, login: user.login, createdAt: user.createdAt } : null,
+      user: user ? { login: user.login, createdAt: user.createdAt } : null,
       dueCount,
       learningCount,
       inProgressCount,
