@@ -30,6 +30,7 @@ async function save(results: Map<number, boolean>) {
 .main{
   max-width: 1200px;
   margin: auto;
+  padding-top: 50px; 
   &__empty{
     text-align: center;
     font-size: 20px;

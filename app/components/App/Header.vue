@@ -4,7 +4,7 @@
         <NuxtLink class='header__link' to='/'>Memzy</NuxtLink>
         <NuxtLink class='header__link' to='/packs'>Мои списки</NuxtLink>
         <NuxtLink v-if='!loggedIn' class='header__link' to='/auth/signin'>Вход</NuxtLink>
-        <NuxtLink  v-else class='header__link' to='/profile'>{{ user?.name }}</NuxtLink>
+        <NuxtLink  v-else class='header__link' to='/profile'>Профиль</NuxtLink>
       </nav>
   </header>
 </template>

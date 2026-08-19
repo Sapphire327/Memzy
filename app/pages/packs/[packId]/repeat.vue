@@ -1,6 +1,6 @@
 <template>
   <div class='main'>
-    <QuestTestSession v-if='data?.quests?.length' :key='practiceMode' :quests='data.quests' :back-to='`/packs/${packId}`' :save='save'></QuestTestSession>
+    <QuestTestSession  v-if='data?.quests?.length' :quests='data.quests' :back-to='`/packs/${packId}`' :save='save'></QuestTestSession>
     <p v-else class='main__empty'>Слов для повторения пока нет</p>
   </div>
 </template>
@@ -41,10 +41,10 @@ async function save(results: Map<number, boolean>) {
 .main{
   max-width: 1200px;
   margin: auto;
+  padding-top: 50px; 
   &__empty{
     text-align: center;
     font-size: 20px;
-    margin-top: 20px;
   }
 }
 </style>
