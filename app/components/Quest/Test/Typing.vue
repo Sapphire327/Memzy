@@ -125,7 +125,7 @@ function handleKeydown(event: KeyboardEvent) {
 
 onMounted(() => {
   window.addEventListener('keydown', handleKeydown)
-  if(focusInput)
+  if(props.instantFocus)
     focusInput()
 })
 onUnmounted(() => window.removeEventListener('keydown', handleKeydown))
