@@ -5,57 +5,8 @@
     {
       "idx": 0,
       "version": "7",
-      "when": 1771614445394,
-      "tag": "0000_harsh_the_watchers",
-      "breakpoints": true
-    },
-    {
-      "idx": 1,
-      "version": "7",
-      "when": 1772632208755,
-      "tag": "0001_plain_major_mapleleaf",
-      "breakpoints": true
-    },
-    {
-      "idx": 2,
-      "version": "7",
-      "when": 1772806507439,
-      "tag": "0002_slimy_starbolt",
-      "breakpoints": true
-    },
-    {
-      "idx": 3,
-      "version": "7",
-      "when": 1774193655354,
-      "tag": "0003_flippant_sauron",
-      "breakpoints": true
-    },
-    {
-      "idx": 4,
-      "version": "7",
-      "when": 1775026800000,
-      "tag": "0004_sparkling_migration",
-      "breakpoints": true
-    },
-    {
-      "idx": 5,
-      "version": "7",
-      "when": 1786037753201,
-      "tag": "0005_past_mother_askani",
-      "breakpoints": true
-    },
-    {
-      "idx": 6,
-      "version": "7",
-      "when": 1786050825989,
-      "tag": "0006_zippy_red_ghost",
-      "breakpoints": true
-    },
-    {
-      "idx": 7,
-      "version": "7",
-      "when": 1787152099476,
-      "tag": "0007_narrow_sway",
+      "when": 1787222232543,
+      "tag": "0000_mute_rafael_vega",
       "breakpoints": true
     }
   ]

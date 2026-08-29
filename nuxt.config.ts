@@ -61,7 +61,7 @@ export default defineNuxtConfig({
     session:{
       password:process.env.NUXT_SESSION_PASSWORD || '',
       name:'memzy-session',
-      maxAge:60*24*3,
+      maxAge: 60 * 60 * 24 * 30,
       cookie:{
         secure: process.env.SESSION_COOKIE_SECURE === 'true', // Для HTTP (dev) false, для HTTPS (прод) true
         sameSite: 'strict', // Или 'none' для кросс‑доменных запросов 

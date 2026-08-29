@@ -11,8 +11,8 @@
 
 <script lang="ts" setup>
 import type { RepeatableQuest } from '#shared/schemas'
-import { computed, ref } from 'vue'
 import type { FetchError } from 'ofetch'
+import { computed, ref } from 'vue'
 
 const props = withDefaults(defineProps<{
   quests: RepeatableQuest[]
@@ -36,7 +36,7 @@ function onAnswer(isRight: boolean) {
   if (isFinished.value) {
     return
   }
-  resultAnswers.value.set(props.quests[currentQuest.value].id, isRight)
+  resultAnswers.value.set(props.quests[currentQuest.value]!.id, isRight)
   currentQuest.value++
   if (isFinished.value) {
     sendResults()

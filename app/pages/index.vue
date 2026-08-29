@@ -21,13 +21,34 @@
           <DecorationSticker :words class='desc__sticker'></DecorationSticker>
         </div>
       </div>
-
     </section>
-    <MainPageHowItWorks class='how-it-works'></MainPageHowItWorks>
+    <section>
+      <MainPageHowItWorks class='how-it-works container'></MainPageHowItWorks>
+    </section>
+    <section class='interactive container'>
+      <h2 class='interactive__heading'>Наглядный пример тестов</h2>
+      <div class='interactive__examples'>
+        <div>
+          <p class='interactive__description'>Первый взгляд на новое слово. Здесь ты просто смотришь и запоминаешь. <br>Не нужно ничего делать — просто дай мозгу время познакомиться: как пишется, что значит, как выглядит.</p>
+          <QuestTestLearning class='interactive__test' :quest='quest'></QuestTestLearning>
+        </div>
+        <div>
+          <p class='interactive__description'>На втором и третьем этапе собери перевод из перемешанных букв — как в Wordle. <br>Это активное воспоминание: ты не просто смотришь на ответ, а сам восстанавливаешь слово по буквам.</p>
+          <QuestTestWordle class='interactive__test' :quest='quest'></QuestTestWordle>
+        </div>
+        <div>
+          <p class='interactive__description'>Напиши перевод без подсказок. Три попытки — и если всё верно, слово переходит в долговременную память. Ручной ввод заставляет вспомнить не только значение, но и точное написание. Это этап, на котором знание становится прочным.</p>
+          <QuestTestTyping class='interactive__test' :quest='quest'></QuestTestTyping>
+        </div>
+      </div>
+
+    </section>    
   </div> 
 </template>
 
 <script lang="ts" setup>
+import type { RepeatableQuest } from '~~/shared/schemas'
+
   useHead({ title: 'Memzy' })
   const words = [
     'Resourceful - находчивый',
@@ -37,6 +58,20 @@
     'Easy - легко',
     'Simply - просто',
     'Owl - сова']
+  const quest:RepeatableQuest={
+    lastRepeated: null,
+    NextRepeated: null,
+    level: null,
+    stage: null,
+    id: 0,
+    quest: 'Изучение/обучение',
+    answer: 'learning',
+    hint: 'Оканчивается на ing',
+    exampleInText: 'Learning new words takes time and practice.',
+    questImgName: 'quests/element5-digital-OyCl7Y4y0Bk-unsplash.jpg',
+    answerImgName: 'quests/photo-1603205431143-ce58f21799a4.avif',
+    packId: 0
+  }
     
 </script>
 
@@ -153,9 +188,32 @@
 }
 .how-it-works{
     margin-top: 80px;
-  max-width: 1200px;
-  margin-left: auto;
-  margin-right: auto;
+}
+.interactive{
+  padding-top: 20px;
+  &__examples{
+    margin-top: 20px;
+    display: flex;
+    justify-content: space-between;
+    flex-direction: column;
+    gap: 30px;   
+  }
+  .interactive__test{
+    border-radius:  0 0 10px 10px; 
+  }
+  &__description{
+    font-size: 20px;
+    background-color: white;
+    border-radius: 10px 10px  0 0; 
+    padding: 10px;
+    margin-bottom: 10px;
+  }
+  &__heading{
+    font-size: 26px;
+    color: var(--main-second-darker);
+    text-align: center;
+  }
+
 }
   
 </style>

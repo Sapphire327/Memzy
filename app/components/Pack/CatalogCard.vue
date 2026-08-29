@@ -43,7 +43,7 @@ function toggle() {
   display: flex;
   flex-direction: column;
   gap: 10px;
-  min-height: 150px;
+  // min-height: 150px;
   transition: all 0.3s ease;
 
   &:hover{
