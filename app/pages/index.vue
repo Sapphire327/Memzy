@@ -38,7 +38,7 @@
         </div>
         <div>
           <p class='interactive__description'>Напиши перевод без подсказок. Три попытки — и если всё верно, слово переходит в долговременную память. Ручной ввод заставляет вспомнить не только значение, но и точное написание. Это этап, на котором знание становится прочным.</p>
-          <QuestTestTyping class='interactive__test' :quest='quest'></QuestTestTyping>
+          <QuestTestTyping :instant-focus='false' class='interactive__test' :quest='quest'></QuestTestTyping>
         </div>
       </div>
 

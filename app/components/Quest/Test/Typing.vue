@@ -49,7 +49,9 @@ import type { RepeatableQuest } from '#shared/schemas'
 import { computed, nextTick, onMounted, onUnmounted, ref, watch } from 'vue'
 import getImageUrl from '~/utils/getImageUrl'
 
-const props = defineProps<{ quest: RepeatableQuest }>()
+const props = withDefaults(defineProps<{ quest: RepeatableQuest,instantFocus?:boolean }>(), {
+  instantFocus:true
+})
 const emit = defineEmits<{
   (e: 'learned', isRight: boolean): void
 }>()
@@ -123,7 +125,8 @@ function handleKeydown(event: KeyboardEvent) {
 
 onMounted(() => {
   window.addEventListener('keydown', handleKeydown)
-  focusInput()
+  if(focusInput)
+    focusInput()
 })
 onUnmounted(() => window.removeEventListener('keydown', handleKeydown))
 
