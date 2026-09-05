@@ -37,9 +37,9 @@ describe('Profile/PackProgress', () => {
     expect(row.find('.pack-progress__next').text()).toBe('через 3 дня')
   })
 
-  it('без следующего повторения показывает «—»', () => {
+  it('без следующего повторения показывает «-»', () => {
     const wrapper = mountProgress([pack()])
-    expect(wrapper.find('.pack-progress__next').text()).toBe('—')
+    expect(wrapper.find('.pack-progress__next').text()).toBe('-')
   })
 
   it('показывает пустое состояние', () => {

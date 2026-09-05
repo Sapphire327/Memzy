@@ -3,25 +3,32 @@
     <h2 class='how-it-works__heading'>Простой метод запоминания</h2>
     <div class='how-it-works__blocks'>
       <div class='how-it-works__block'>
-        <h3 class='how-it-works__title'>Этапы изучения слова</h3>
-        <ol class='how-it-works__steps'>
-          <li v-for='(step, index) in steps' :key='index' class='how-it-works__step'>
-            <span class='how-it-works__step-number'>{{ index + 1 }}</span>
-            <span class='how-it-works__step-text'>{{ step }}</span>
-          </li>
-        </ol>
+        <div>
+          <h3 class='how-it-works__title'>Этапы изучения слова</h3>
+          <ol class='how-it-works__steps'>
+            <li v-for='(step, index) in steps' :key='index' class='how-it-works__step'>
+              <span class='how-it-works__step-number'>{{ index + 1 }}</span>
+              <span class='how-it-works__step-text'>{{ step }}</span>
+            </li>
+          </ol>
+        </div>
+        <p class='how-it-works__note'>Верный ответ - переход на следующий этап. <br>
+          Ошибка - сбрасывает интервал к началу и возвращает этап изучения на предыдущий.
+        </p>
       </div>
       <div class='how-it-works__block'>
-        <h3 class='how-it-works__title'>Интервалы повторения</h3>
-        <ul class='how-it-works__intervals'>
-          <li v-for='interval in intervals' :key='interval' class='how-it-works__interval'>
-            <span class='how-it-works__interval-dot'></span>
-            {{ interval }}
-          </li>
-        </ul>
+        <div>
+          <h3 class='how-it-works__title'>Интервалы повторения</h3>
+          <ul class='how-it-works__intervals'>
+            <li v-for='interval in intervals' :key='interval' class='how-it-works__interval'>
+              <span class='how-it-works__interval-dot'></span>
+              {{ interval }}
+            </li>
+          </ul>
+        </div>
         <p class='how-it-works__note'>
-          Верный ответ — уровень изучения растёт, а интервал до следующего повтора увеличивается. Ошибка — сбрасывает
-          интервал к началу и возвращает этап изучения на предыдущий.
+          Верный ответ - интервал до следующего повтора увеличивается. <br>
+          Ошибка - сбрасывает интервал к началу и возвращает этап изучения на предыдущий.
         </p>
       </div>
     </div>
@@ -30,7 +37,7 @@
 
 <script lang="ts" setup>
 const steps = [
-  'Просмотр карточки — знакомишься со словом и переводом',
+  'Просмотр карточки - знакомишься со словом и переводом',
   'Собери слово из букв',
   'Собери слово из букв',
   'Напиши слово по памяти',
@@ -61,6 +68,9 @@ const intervals = ['25 минут', '1 день', '3 дня', '1 неделя', 
     background-color: white;
     border-radius: 12px;
     padding: 24px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
   }
   &__title{
     font-size: 20px;
@@ -72,6 +82,7 @@ const intervals = ['25 минут', '1 день', '3 дня', '1 неделя', 
     display: flex;
     flex-direction: column;
     gap: 12px;
+    margin-bottom: 20px;
   }
   &__step{
     display: flex;

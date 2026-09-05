@@ -29,15 +29,15 @@
       <h2 class='interactive__heading'>Наглядный пример тестов</h2>
       <div class='interactive__examples'>
         <div>
-          <p class='interactive__description'>Первый взгляд на новое слово. Здесь ты просто смотришь и запоминаешь. <br>Не нужно ничего делать — просто дай мозгу время познакомиться: как пишется, что значит, как выглядит.</p>
+          <p class='interactive__description'>Первый этап это взгляд на новое слово. <br> Здесь ты просто смотришь и запоминаешь. <br>Не нужно ничего делать - просто дай мозгу время познакомиться: <br> как пишется, что значит, как выглядит.</p>
           <QuestTestLearning class='interactive__test' :quest='quest'></QuestTestLearning>
         </div>
         <div>
-          <p class='interactive__description'>На втором и третьем этапе собери перевод из перемешанных букв — как в Wordle. <br>Это активное воспоминание: ты не просто смотришь на ответ, а сам восстанавливаешь слово по буквам.</p>
+          <p class='interactive__description'>На втором и третьем этапе собери перевод из перемешанных букв <br>Это активное воспоминание:ты не просто смотришь на ответ, <br> а сам восстанавливаешь слово по буквам.</p>
           <QuestTestWordle class='interactive__test' :quest='quest'></QuestTestWordle>
         </div>
         <div>
-          <p class='interactive__description'>Напиши перевод без подсказок. Три попытки — и если всё верно, слово переходит в долговременную память. Ручной ввод заставляет вспомнить не только значение, но и точное написание. Это этап, на котором знание становится прочным.</p>
+          <p class='interactive__description'>Напиши перевод без подсказок. <br> Три попытки - и если всё верно, слово переходит в долговременную память. <br>Ручной ввод заставляет вспомнить не только значение, но и точное написание. <br> Это этап, на котором знание становится прочным.</p>
           <QuestTestTyping :instant-focus='false' class='interactive__test' :quest='quest'></QuestTestTyping>
         </div>
       </div>
@@ -200,10 +200,11 @@ import type { RepeatableQuest } from '~~/shared/schemas'
   }
   .interactive__test{
     border-radius:  0 0 10px 10px; 
+    background-color: rgba(255, 255, 255, 0.868);
   }
   &__description{
     font-size: 20px;
-    background-color: white;
+    background-color: rgba(255, 255, 255, 0.868);
     border-radius: 10px 10px  0 0; 
     padding: 10px;
     margin-bottom: 10px;

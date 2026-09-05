@@ -21,7 +21,7 @@ import untilString from '~/utils/untilString'
 defineProps<{ packs: ProfilePackProgress[] }>()
 
 function nextRepeatText(nextRepeat?: Date): string {
-  if (!nextRepeat) return '—'
+  if (!nextRepeat) return '-'
   return untilString(new Date(nextRepeat))
 }
 </script>

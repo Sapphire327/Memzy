@@ -27,7 +27,7 @@ describe('intervalMs', () => {
   })
 })
 
-describe('calculateRepeatResult — верный ответ', () => {
+describe('calculateRepeatResult - верный ответ', () => {
   it('первый повтор без истории: level=2, stage=1, интервал 25 минут', () => {
     const result = calculateRepeatResult(undefined, true, NOW)
     expect(result.level).toBe(2)
@@ -64,7 +64,7 @@ describe('calculateRepeatResult — верный ответ', () => {
   })
 })
 
-describe('calculateRepeatResult — неверный ответ', () => {
+describe('calculateRepeatResult - неверный ответ', () => {
   it('сбрасывает стадию на 1 и понижает уровень', () => {
     const result = calculateRepeatResult({ level: 3, stage: 5 }, false, NOW)
     expect(result.level).toBe(2)

@@ -87,7 +87,7 @@ const stageDistribution = computed(() => data.value?.stageDistribution ?? [])
 const packs = computed(() => data.value?.packs ?? [])
 const lastTrainingString = computed(() => {
   const last = data.value?.lastTraining
-  return last ? daysAgoString(new Date(last)) : '—'
+  return last ? daysAgoString(new Date(last)) : '-'
 })
 
 const levelLabels: Record<number, string> = {

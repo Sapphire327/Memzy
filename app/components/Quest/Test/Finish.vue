@@ -35,7 +35,7 @@ const subtitle = computed(() => {
   if (percent.value >= 90) return 'Отлично!'
   if (percent.value >= 70) return 'Хорошая работа!'
   if (percent.value >= 50) return 'Неплохо, но есть над чем поработать'
-  return 'Попробуй ещё раз — получится!'
+  return 'Попробуй ещё раз - получится!'
 })
 </script>
 

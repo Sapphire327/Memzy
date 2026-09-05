@@ -1,8 +1,8 @@
 // @vitest-environment happy-dom
+import type { RepeatableQuest } from '#shared/schemas'
 import { mount } from '@vue/test-utils'
 import { describe, expect, it } from 'vitest'
 import Finish from '~~/app/components/Quest/Test/Finish.vue'
-import type { RepeatableQuest } from '#shared/schemas'
 
 const stubs = {
   NuxtLink: { props: ['to'], template: '<a :href="to"><slot /></a>' },
@@ -57,7 +57,7 @@ describe('Quest/Test/Finish', () => {
     expect(ok.find('.finish__subtitle').text()).toBe('Неплохо, но есть над чем поработать')
 
     const bad = mountFinish([quest(1), quest(2)], new Map([[1, false], [2, false]]))
-    expect(bad.find('.finish__subtitle').text()).toBe('Попробуй ещё раз — получится!')
+    expect(bad.find('.finish__subtitle').text()).toBe('Попробуй ещё раз - получится!')
   })
 
   it('ссылка «К списку» ведёт на backTo', () => {
